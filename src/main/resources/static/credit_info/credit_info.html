@@ -1,0 +1,52 @@
+<p></p>
+<h3>Информация о кредите</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Лимит по кредиту</th>
+        <th scope="col">Процентная ставка (в %)</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <td>{{credit.id}}</td>
+    <td>{{credit.limitation}}</td>
+    <td>{{credit.percent}}</td>
+    <td>
+        <button type="button" class="btn btn-outline-primary" ng-click="updateCredit()">Редактировать</button>
+    </td>
+    </tbody>
+</table>
+
+<div ng-show = "showCreditEditForm">
+    <form novalidate ng-submit="saveCredit()">
+        <div class="mb-3">
+            <label for="inputLimitation" class="form-label">Лимит по кредиту</label>
+            <input type="number" class="form-control" ng-model="creditDto.limitation" id="inputLimitation" aria-describedby="minAmountHelp">
+        </div>
+        <div class="mb-3">
+            <label for="inputPercent" class="form-label">Процент</label>
+            <input type="number" class="form-control" ng-model="creditDto.percent" id="inputPercent" aria-describedby="percentHelp">
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="button" class="btn btn-outline-primary" ng-click="closeForm()">Закрыть</button>
+    </form>
+</div>
+<!--<div>-->
+<!--    <button class="btn btn-outline-primary" ng-click="updateClient(client.id)">Редактировать</button>-->
+<!--</div>-->
+<!--<p></p>-->
+<!--<h3>Партнеры клиента</h3>-->
+<!--<table class="table">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th scope="col">Название банка</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr ng-repeat="oi in client.bankList">-->
+<!--        <td>{{oi.title}}</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->

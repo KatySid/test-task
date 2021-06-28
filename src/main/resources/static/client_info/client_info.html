@@ -1,0 +1,68 @@
+<p></p>
+<h3>Информация о клиенте</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Отчество</th>
+        <th scope="col">e-mail</th>
+        <th scope="col">Номер паспорта</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <td>{{client.lastName}}</td>
+    <td>{{client.name}}</td>
+    <td>{{client.patronymic}}</td>
+    <td>{{client.email}}</td>
+    <td>{{client.passport}}</td>
+    <td>
+        <button type="button" class="btn btn-outline-primary" ng-click="updateClient()">Редактировать</button>
+    </td>
+    </tbody>
+</table>
+
+<div ng-show = "showClientEditForm">
+    <form novalidate ng-submit="saveClient()">
+        <div class="mb-3">
+            <label for="inputLastName" class="form-label">Фамилия</label>
+            <input type="text" class="form-control" ng-model="clientDto.lastName" id="inputLastName" aria-describedby="lastNameHelp">
+        </div>
+        <div class="mb-3">
+            <label for="inputName" class="form-label">Имя</label>
+            <input type="text" class="form-control" ng-model="clientDto.name" id="inputName" aria-describedby="nameHelp">
+        </div>
+        <div class="mb-3">
+            <label for="inputPatronymic" class="form-label">Отчество</label>
+            <input type="text" class="form-control" ng-model="clientDto.patronymic" id="inputPatronymic" aria-describedby="patronymicHelp">
+        </div>
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label">e-mail</label>
+            <input type="text" class="form-control" ng-model="clientDto.email" id="inputEmail" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="inputPassport" class="form-label">Номер паспорта</label>
+            <input type="text" class="form-control" ng-model="clientDto.passport" id="inputPassport" aria-describedby="passportHelp">
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="button" class="btn btn-outline-primary" ng-click="closeForm()">Закрыть</button>
+    </form>
+</div>
+<!--<div>-->
+<!--    <button class="btn btn-outline-primary" ng-click="updateClient(client.id)">Редактировать</button>-->
+<!--</div>-->
+<!--<p></p>-->
+<!--<h3>Партнеры клиента</h3>-->
+<!--<table class="table">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th scope="col">Название банка</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr ng-repeat="oi in client.bankList">-->
+<!--        <td>{{oi.title}}</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->

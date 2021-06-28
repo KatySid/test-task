@@ -1,0 +1,73 @@
+<p></p>
+<h4>Список кредитов</h4>
+
+<form novalidate ng-submit="loadPageCredit()">
+    <div class="form-group row">
+        <div class="form-group col-md-3">
+            <label for="filterMinPercent">Минимальный процент</label>
+            <input class="form-control" type="number" ng-model="filter.min_percent" id="filterMinPercent">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="filterMaxPercent">Максимальный процент</label>
+            <input class="form-control" type="number" ng-model="filter.max_percent" id="filterMaxPercent">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="filterMinLimitation">Минимальный лимит по кредиту</label>
+            <input class="form-control" type="number" ng-model="filter.min_limitation" id="filterMinLimitation">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="filterMaxLimitation">Максимальный лимит по кредиту</label>
+            <input class="form-control" type="number" ng-model="filter.max_limitation" id="filterMaxLimitation">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="filterSubmit">Фильтр</label>
+            <button class="form-control btn btn-primary" id="filterSubmit" type="submit">Применить</button>
+        </div>
+    </div>
+</form>
+<p></p>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Лимит по кредиту</th>
+        <th scope="col">Процент</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in creditsPage.content">
+        <td>{{p.id}}</td>
+        <td>{{p.limitation}}</td>
+        <td>{{p.percent}}</td>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="showCreditInfo(p.id)">Посмотреть</button>
+        </td>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="deleteCredit(p.id)">Удалить</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation" ng-show = "creditsPage.totalPages>1">
+    <ul class="pagination">
+        <li ng-class="creditsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCredit(1)">В начало</a>
+        </li>
+
+        <li ng-class="creditsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCredit(creditsPage.number)">Пред.</a>
+        </li>
+
+        <li ng-class="creditsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+            ng-repeat="pageIndex in paginationArray">
+            <a class="page-link" ng-click="loadPageCredit(pageIndex)">{{pageIndex}}</a>
+        </li>
+
+        <li ng-class="creditsPage.last ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCredit(creditsPage.number + 2)">След.</a>
+        </li>
+    </ul>
+</nav>
