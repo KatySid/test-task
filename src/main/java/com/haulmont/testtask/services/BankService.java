@@ -7,6 +7,7 @@ import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import com.haulmont.testtask.repositories.BankRepository;
 import com.haulmont.testtask.repositories.ClientRepository;
+import com.haulmont.testtask.repositories.CreditRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ import java.util.Optional;
 public class BankService {
     private final BankRepository bankRepository;
     private final ClientRepository clientRepository;
+    private final CreditRepository creditRepository;
 
     public Optional<Bank> findById(Long id) {
         return bankRepository.findById(id);
@@ -72,7 +74,6 @@ public class BankService {
     public List<Client> getClientsOfBankById(Long id){
        if(bankRepository.findById(id).isPresent()) {
            Bank bank = bankRepository.findById(id).get();
-           bank.getClients();
            return bank.getClients();
        }else {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -86,5 +87,18 @@ public class BankService {
         }else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Transactional
+    public void deleteClient(Long bankId, Long clientId) {
+        Client client = clientRepository.findById(clientId).get();
+        List<Bank> banks = client.getBanksList();
+        Bank bank = bankRepository.findById(bankId).get();
+        banks.remove(bank);
+    }
+
+    @Transactional
+    public void deleteCredit(Long creditId) {
+        creditRepository.deleteById(creditId);
     }
 }

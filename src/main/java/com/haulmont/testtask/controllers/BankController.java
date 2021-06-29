@@ -49,8 +49,8 @@ public class BankController {
         return new BankDto(bankService.findById(id).get());
     }
 
-    @GetMapping ("/clientsOfBank/{id}")
-    public Page<ClientShortDto> getClientsOfBankById(@PathVariable Long id,
+    @GetMapping ("/clientsOfBank/{bankId}")
+    public Page<ClientShortDto> getClientsOfBankById(@PathVariable Long bankId,
                                                      @RequestParam MultiValueMap<String, String> params,
                                                      @RequestParam (name = "p", defaultValue = "1") int page,
                                                      @RequestParam (name = "pageSize", defaultValue = "5") int pageSize) {
@@ -59,7 +59,7 @@ public class BankController {
         }
 
         PageRequest pageRequest=PageRequest.of(page-1, pageSize);
-        List<Client> clients= bankService.getClientsOfBankById(id);
+        List<Client> clients= bankService.getClientsOfBankById(bankId);
         int start = toIntExact(pageRequest.getOffset());
         int end = Math.min(start+pageRequest.getPageSize(),clients.size());
         Page<ClientShortDto> clientsShortDtoPage = new PageImpl<ClientShortDto>(
@@ -104,4 +104,10 @@ public class BankController {
     public void deleteBankById(@RequestParam Long id) {
         bankService.deleteById(id);
     }
+
+    @GetMapping ("/deleteClient")
+    public void deleteClient(@RequestParam Long bankId, @RequestParam Long clientId) {
+        bankService.deleteClient(bankId, clientId);
+    }
+
 }

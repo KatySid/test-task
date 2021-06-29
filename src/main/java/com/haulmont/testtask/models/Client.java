@@ -16,7 +16,6 @@ import java.util.Objects;
 
 @Data
 @AllArgsConstructor
-//@NoArgsConstructor
 @Entity
 @Table(name = "clients")
 public class Client {

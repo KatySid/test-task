@@ -33,15 +33,19 @@ public class CreditOfferService {
     }
 
     public void addClient(Client client){
-        creditOfferForm.setClient(client);
+        creditOfferForm.setClientShortDto(client);
     }
 
     public void addCredit(Credit credit){
-        creditOfferForm.setCredit(credit);
+        creditOfferForm.setCreditDto(credit);
     }
 
     public void clearForm() {
         creditOfferForm.clearForm();
     }
 
+    public Integer addDuration(Integer duration) {
+        creditOfferForm.setDuration(duration);
+        return creditOfferForm.getDuration();
+    }
 }

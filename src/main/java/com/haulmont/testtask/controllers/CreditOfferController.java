@@ -1,5 +1,6 @@
 package com.haulmont.testtask.controllers;
 
+import com.haulmont.testtask.dtos.CreditDto;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import com.haulmont.testtask.services.ClientService;
@@ -25,7 +26,7 @@ import static java.lang.Math.toIntExact;
 
 
 @RestController
-@RequestMapping("/api/v1/credit_offer")
+@RequestMapping("/api/v1/credit_offers")
 @Slf4j
 
 public class CreditOfferController {
@@ -38,6 +39,11 @@ public class CreditOfferController {
         this.creditOfferService = creditOfferService;
         this.clientService = clientService;
         this.creditService = creditService;
+    }
+
+    @GetMapping
+    public CreditOfferForm getCreditOffer(){
+        return creditOfferService.getCreditOfferForm();
     }
 
     @GetMapping ("/paymentSchedule")
@@ -71,12 +77,18 @@ public class CreditOfferController {
         return creditOfferService.getCreditOfferForm().getSumPercentOfCredit();
     }
 
+    @GetMapping("/addDuration")
+    public Integer addDuration(@RequestParam Integer duration) {
+        return creditOfferService.addDuration(duration);
+    }
+
     @GetMapping("/addCredit")
-    public void addCredit(@RequestParam Long id) {
+    public CreditDto addCredit(@RequestParam Long id) {
             Optional <Credit> credit = creditService.findById(id);
         if (credit.isPresent()) {
             creditOfferService.addCredit(credit.get());
         }
+        return creditOfferService.getCreditOfferForm().getCreditDto();
     }
 
     @GetMapping("/clear")

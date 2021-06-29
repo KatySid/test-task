@@ -21,7 +21,6 @@ public class ClientDto {
     private String email;
     private String passport;
     public List<String> titlesBanksList;
-//    public List<BankDto> bankDtoList;
 
 public ClientDto (Client client) {
     this.id = client.getId();

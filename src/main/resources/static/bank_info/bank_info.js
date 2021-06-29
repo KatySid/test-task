@@ -158,18 +158,18 @@ angular.module('app').controller('bankInfoController', function ($scope, $http, 
          }
 
     $scope.closeCreditForm= function () {
-               $scope.showCreditCreateForm = false;
+        $scope.showCreditCreateForm = false;
     }
 
     $scope.updateBank = function(){
-    $scope.showBankUpdateForm = true;
-    }
-    $scope.closeBankUpdate = function(){
         $scope.showBankUpdateForm = true;
-        }
+    }
+    $scope.closeBankForm= function(){
+        $scope.showBankUpdateForm = false;
+    }
 
     $scope.saveBank = function () {
-    $scope.bankDto.id = $routeParams.bankIdParam,
+        $scope.bankDto.id = $routeParams.bankIdParam,
               $http.put(contextPath + '/api/v1/banks', $scope.bankDto)
               .then(function successCallback(response){
                                                    console.log("Данные банка изменены")
@@ -178,7 +178,32 @@ angular.module('app').controller('bankInfoController', function ($scope, $http, 
                                                    $scope.loadBank(1);
 
                            });
-                   }
+    }
+
+    $scope.deleteClient = function(clientId){
+        $http({
+                url: contextPath + '/api/v1/banks/deleteClient',
+                method: 'GET',
+                params: {
+                          clientId: clientId,
+                          bankId: $routeParams.bankIdParam
+                          }
+                }).then(function successCallback(response){
+                $scope.loadPageClients(1);
+                 });
+    }
+
+    $scope.deleteCredit = function(creditId){
+            $http({
+                    url: contextPath + '/api/v1/credits',
+                    method: 'DELETE',
+                    params: {
+                              id: creditId
+                              }
+                    }).then(function successCallback(response){
+                    $scope.loadPageCredits(1);
+    });
+    }
 
     $scope.loadBank(1);
 

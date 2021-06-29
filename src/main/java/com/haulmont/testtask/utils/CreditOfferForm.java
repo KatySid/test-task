@@ -1,5 +1,7 @@
 package com.haulmont.testtask.utils;
 
+import com.haulmont.testtask.dtos.ClientShortDto;
+import com.haulmont.testtask.dtos.CreditDto;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import lombok.Data;
@@ -14,8 +16,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CreditOfferForm {
-        private Client client;
-        private Credit credit;
+        private ClientShortDto clientShortDto;
+        private CreditDto creditDto;
         private BigDecimal amount;
         private Integer duration;
         private List<Payment> paymentSchedule;
@@ -25,35 +27,28 @@ public class CreditOfferForm {
     public void init(){
         paymentSchedule = new ArrayList<>();
         this.amount = BigDecimal.ZERO;
-        this.credit = new Credit();
-        this.client = new Client();
+        this.creditDto = new CreditDto();
+        this.clientShortDto = new ClientShortDto();
 
     }
 
     public CreditOfferForm(Client client, Credit credit,Integer duration) {
-        this.client = client;
-        this.credit = credit;
+        this.clientShortDto = new ClientShortDto(client);
+        this.creditDto = new CreditDto(credit);
         this.duration = duration;
         this.paymentSchedule = new ArrayList<>(duration);
     }
 
-//    public  CreditOfferForm(){
-//        this.paymentSchedule = new ArrayList<>();
-//        this.amount = BigDecimal.ZERO;
-//        this.duration = null;
-//
-//    }
-
     public void clearForm () {
-            this.client = null;
-            this.credit = null;
+            this.clientShortDto = null;
+            this.creditDto = null;
             this.amount = null;
             this.duration = null;
             paymentSchedule.clear();
         }
 
     public void recalculatePaymentSchedule(LocalDateTime dateTime){
-        BigDecimal remainder = this.credit.getLimitation();
+        BigDecimal remainder = this.creditDto.getLimitation();
         BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration));
                 for (int i = 0; i < this.duration.intValue(); i++) {
                     Payment payment = new Payment();
@@ -69,7 +64,7 @@ public class CreditOfferForm {
         }
 
         public BigDecimal calculatePercentRate(){
-            BigDecimal percentRate = this.credit.getPercent().divide(new BigDecimal(100/12));
+            BigDecimal percentRate = this.creditDto.getPercent().divide(new BigDecimal(100/12));
             return percentRate;
         }
 
@@ -92,11 +87,23 @@ public class CreditOfferForm {
         return this.paymentSchedule;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClientShortDto(Client client) {
+        this.clientShortDto = new ClientShortDto(client);
     }
 
-    public void setCredit(Credit credit) {
-        this.credit = credit;
+    public void setCreditDto(Credit credit) {
+        this.creditDto = new CreditDto(credit);
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Integer getDuration() {
+        return this.duration;
+    }
+
+    public CreditDto getCreditDto() {
+        return this.creditDto;
     }
 }

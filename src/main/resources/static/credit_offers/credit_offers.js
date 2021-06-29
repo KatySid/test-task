@@ -1,6 +1,16 @@
-angular.module('app').controller('creditOfferController', function ($scope, $http, $localStorage, $routeParams, $location) {
+angular.module('app').controller('creditOffersController', function ($scope, $http, $localStorage, $routeParams, $location) {
     const contextPath = 'http://localhost:8189/app';
 
+    $scope.showDurationForm = false;
+
+    $scope.loadCreditOfferForm = function(){
+                $http({
+                         url: contextPath + '/api/v1/credit_offers',
+                         method: 'GET'
+                     }).then(function (response) {
+                         $scope.creditOfferForm = response.data;
+                       });
+        }
 
     $scope.loadPageClients = function (page) {
             $http({
@@ -11,9 +21,8 @@ angular.module('app').controller('creditOfferController', function ($scope, $htt
                           pageSize: 5,
                           lastName: $scope.filter ? $scope.filter.lastName : null,
                           name: $scope.filter ? $scope.filter.name : null,
-                          patronymic: $scope.filter ? $scope.filter.patronymic : null,
-                          bankId: $routeParams.bankIdParam
-                          }
+                          patronymic: $scope.filter ? $scope.filter.patronymic : null
+                         }
             }).then(function (response) {
                 $scope.clientsPage = response.data;
 
@@ -65,7 +74,7 @@ angular.module('app').controller('creditOfferController', function ($scope, $htt
          $scope.loadPageClients(1);
     }
 
-    $scope.closeShowClients = function(){
+    $scope.closeClients = function(){
         $scope.showClientsList = false;
     }
 
@@ -94,24 +103,71 @@ angular.module('app').controller('creditOfferController', function ($scope, $htt
                    $scope.showCreditCreateForm = false;
         }
 
-     $scope.addClient = function(){
-                    $scope.showClientCreateForm = true;
-        }
+    $scope.addClient = function(){
+            $scope.showClientCreateForm = true;
+    }
+
+    $scope.addNewClient = function(){
+            $scope.showClientCreateForm = true;
+    }
+
+    $scope.closeClientForm= function () {
+            $scope.showClientCreateForm = false;
+    }
 
      $scope.closeClientForm= function () {
-                      $scope.showClientCreateForm = false;
+            $scope.showClientCreateForm = false;
      }
 
-    $scope.createNewClientOfBank = function(){
-        $scope.newClientDto.bankId =  $routeParams.bankIdParam;
-         $http.post(contextPath + '/api/v1/clients', $scope.newClientDto).then(function successCallback(response){
-                    console.log("Клиент сохранен"),
-                    $scope.showClientCreateForm = false;
-                    $scope.loadPageClients(1);
+     $scope.showDuration = function(){
+        $scope.showDurationForm = true;
+     }
 
-         });
-         }
+     $scope.closeDuration = function(){
+           $scope.showDurationForm = false;
+     }
 
+     $scope.addDuration = function(){
+            $http({
+                     url: contextPath + '/api/v1/credit_offers/addDuration',
+                     method: 'GET',
+                     params: {
+                               duration: duration
+                              }
+                 }).then(function (response) {
+                     $scope.duration = response.data;
+                     $scope.showDurationForm = false;
+                     $scope.loadCreditOfferForm();
+                   });
+    }
+    $scope.addClientToOffer = function(clientId){
+                $http({
+                         url: contextPath + '/api/v1/credit_offers/addClient',
+                         method: 'GET',
+                         params: {
+                                   id: clientId
+                                  }
+                     }).then(function (response) {
+                         $scope.showClientsList = false;
+                         $scope.loadCreditOfferForm();
+                       });
+        }
+
+        $scope.addCreditToOffer = function(creditId){
+                        $http({
+                                 url: contextPath + '/api/v1/credit_offers/addCredit',
+                                 method: 'GET',
+                                 params: {
+                                           id: creditId
+                                          }
+                             }).then(function (response) {
+                                 $scope.creditInOffer = response.data;
+                                 $scope.showCreditsList = false;
+                                 $scope.loadCreditOfferForm();
+                               });
+                }
+//    loadPageCredits(1);
+//    loadPageClients(1);
     });
 
 

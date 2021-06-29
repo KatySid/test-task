@@ -16,13 +16,84 @@
         <button type="button" class="btn btn-outline-primary" ng-click="showClients()">Добавить клиента</button>
     </td>
     <td>
-        <button type="button" class="btn btn-outline-primary" ng-click="showCredits()">Добавить</button>
+        <button type="button" class="btn btn-outline-primary" ng-click="showDuration()">Добавить</button>
     </td>
     <td>
     </td>
     </tbody>
 </table>
 <p></p>
+<table ng-show="duration>0" class="table">
+    <thead>
+    <tr>
+        <th scope="col">Срок кредита</th>
+        <th scope="col">{{creditOfferForm.duration}}</th>
+        <th scope="col">мес</th>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="deleteDuration()">Удалить срок из предложения</button>
+        </td>
+    </tr>
+    </thead>
+</table>
+<p></p>
+<table ng-show="credit.limitation>0" class="table">
+    <thead>
+    <tr>
+        <th scope="col">Лимит по кредиту</th>
+        <th scope="col">{{credit.limitation}}</th>
+        <th scope="col"> руб</th>
+    </tr>
+    </thead>
+</table >
+    <table ng-show="credit.percent>0" class="table">
+    <thead>
+    <tr>
+        <th scope="col">Процент по кредиту</th>
+        <th scope="col">{{credit.percent}}</th>
+        <th scope="col">%</th>
+        <th>
+            <button class="btn btn-outline-primary" ng-click="deleteCredit(p.id)">Удалить кредит из предложения</button>
+        </th>
+    </tr>
+    </thead>
+</table>
+<table ng-show ="client.lastName.lenght>0" class="table">
+    <thead>
+    <tr>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Отчество</th>
+        <th scope="col">e-mail</th>
+        <th scope="col">Номер паспорта</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{client.lastName}}</td>
+        <td>{{client.name}}</td>
+        <td>{{client.patronymic}}</td>
+        <td>{{client.email}}</td>
+        <td>{{client.passport}}</td>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="deleteClient(p.id)">Удалить из предложения</button>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+<div ng-show = "showDurationForm">
+    <h4>Введите срок кредита в месяцах</h4>
+    <form ng-submit="addDuration()">
+        <div class="mb-3">
+            <label for="inputDuration" class="form-label">Срок кредита</label>
+            <input type="number" class="form-control" ng-model="duration" id="inputDuration" aria-describedby="durationHelp">
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button type="button" class="btn btn-outline-primary" ng-click="closeDuration()">Закрыть</button>
+    </form>
+</div>
 <div ng-show = "showClientsList">
     <h3>Список клиентов</h3>
     <form novalidate ng-submit="loadPageClients()">
@@ -66,7 +137,7 @@
             <td>{{p.email}}</td>
             <td>{{p.passport}}</td>
             <td>
-                <button class="btn btn-outline-primary" ng-click="addClient(p.id)">Добавить в предложение</button>
+                <button class="btn btn-outline-primary" ng-click="addClientToOffer(p.id)">Добавить в предложение</button>
             </td>
 
         </tr>
@@ -93,12 +164,12 @@
         </ul>
     </nav>
 
-    <button type="button" class="btn btn-outline-primary" ng-click="closeShowClients()">Закрыть список клиентов</button>
+    <button type="button" class="btn btn-outline-primary" ng-click="closeClientsPage()">Закрыть список клиентов</button>
     <button type="button" class="btn btn-outline-primary" ng-click="addNewClient()">Добавить нового клиента</button>
 </div>
 <div ng-show = "showClientCreateForm">
     <h4>Введите данные нового клиента</h4>
-    <form novalidate ng-submit="createNewClientOfBank()">
+    <form novalidate ng-submit="createNewClient()">
         <div class="mb-3">
             <label for="inputLastName" class="form-label">Фамилия</label>
             <input type="text" class="form-control" ng-model="newClientDto.lastName" id="inputLastName" aria-describedby="lastNameHelp">
@@ -166,7 +237,7 @@
             <td>{{credit.limitation}}</td>
             <td>{{credit.percent}}</td>
             <td>
-                <button class="btn btn-outline-primary" ng-click="addCredit(credit.id)">Добавить в предложение</button>
+                <button class="btn btn-outline-primary" ng-click="addCreditToOffer(credit.id)">Добавить в предложение</button>
             </td>
         </tr>
         </tbody>
