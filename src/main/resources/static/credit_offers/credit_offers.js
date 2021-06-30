@@ -137,6 +137,7 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
     $scope.deleteDuration = function(){
                 $http.get(contextPath + '/api/v1/credit_offers/deleteDuration/').then(function (response) {
                          $scope.durationForm = false;
+                         $scope.CreditOfferSchedule = false;
                        });
     }
 
@@ -184,6 +185,7 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
                                 method: 'GET',
                                }).then(function (response) {
                                $scope.creditInOffer = false;
+                               $scope.CreditOfferSchedule = false;
                                });
        }
 

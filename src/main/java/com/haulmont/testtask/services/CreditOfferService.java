@@ -29,8 +29,7 @@ public class CreditOfferService {
 
     @Transactional
     public List<Payment> getCreditOfferSchedule() {
-        creditOfferForm.recalculatePaymentSchedule(LocalDateTime.now());
-        return creditOfferForm.getPaymentSchedule();
+        return creditOfferForm.getPaymentSchedule(LocalDateTime.now());
     }
 
     public void addClient(Client client){
@@ -51,7 +50,10 @@ public class CreditOfferService {
         return creditOfferForm.getDuration();
     }
 
+    @Transactional
     public void deleteDuration() {
+        List<Payment> payments = creditOfferForm.getPaymentSchedule(LocalDateTime.now());
+        payments.removeAll(payments);
         creditOfferForm.setDuration(null);
     }
 
@@ -59,7 +61,10 @@ public class CreditOfferService {
         creditOfferForm.getClientShortDto().clear();
     }
 
+    @Transactional
     public void deleteCredit() {
         creditOfferForm.getCreditDto().clear();
+        List<Payment> payments = creditOfferForm.getPaymentSchedule(LocalDateTime.now());
+        payments.removeAll(payments);
     }
 }

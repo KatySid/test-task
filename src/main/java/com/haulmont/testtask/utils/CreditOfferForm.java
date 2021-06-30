@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,18 +49,20 @@ public class CreditOfferForm {
             paymentSchedule.clear();
         }
 
-    public void recalculatePaymentSchedule(LocalDateTime dateTime){
+    private void recalculatePaymentSchedule(LocalDateTime dateTime){
+        paymentSchedule.removeAll(paymentSchedule);
         BigDecimal remainder = this.creditDto.getLimitation();
-        BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration));
+        BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 2, RoundingMode.HALF_UP);
                 for (int i = 0; i < this.duration.intValue(); i++) {
                     Payment payment = new Payment();
                     payment.setBodyCreditPayment(bodyCreditPayment);
                     payment.setDate(dateTime.plusMonths(i));
-                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate().divide(new BigDecimal(100)));
+                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate().divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
                     payment.setPercentPayment(bodyPercentPayment);
+                    BigDecimal amountPayment = payment.getAmountPayment();
                     paymentSchedule.add(payment);
                     remainder = remainder.subtract(bodyCreditPayment);
-                    amount.add(payment.getAmountPayment());
+                    amount=amount.add(amountPayment);
                 };
 
         }
@@ -83,8 +86,8 @@ public class CreditOfferForm {
         recalculatePaymentSchedule(LocalDateTime.now());
         return amount;
     }
-    public List<Payment> getPaymentSchedule(){
-        recalculatePaymentSchedule(LocalDateTime.now());
+    public List<Payment> getPaymentSchedule(LocalDateTime dateOffer){
+        recalculatePaymentSchedule(dateOffer);
         return this.paymentSchedule;
     }
 

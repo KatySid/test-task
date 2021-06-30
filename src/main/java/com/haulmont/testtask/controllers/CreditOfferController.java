@@ -48,11 +48,11 @@ public class CreditOfferController {
     }
 
     @GetMapping ("/paymentSchedule")
-    public Page<Payment> getCreditOfferSchedule(@RequestParam (name = "p", defaultValue = "1") int page, @RequestParam (name = "pageSize", defaultValue = "10") int pageSize){
+    public Page<Payment> getCreditOfferSchedule(@RequestParam (name = "p", defaultValue = "1") int page){
         if (page < 1) {
             page = 1;
         }
-        PageRequest pageRequest=PageRequest.of(page-1, pageSize);
+        PageRequest pageRequest=PageRequest.of(page-1, 10);
         List<Payment> paymentSchedule = creditOfferService.getCreditOfferSchedule();
         int start = toIntExact(pageRequest.getOffset());
         int end = Math.min(start+pageRequest.getPageSize(),paymentSchedule.size());
@@ -60,8 +60,24 @@ public class CreditOfferController {
                 paymentSchedule.subList(start, end),
                 pageRequest,
                 paymentSchedule.size());
-        return  paymentSchedulePage;
+        return paymentSchedulePage;
     }
+
+//    @GetMapping ("/paymentSchedule")
+//    public Page<Payment> getCreditOfferSchedule(@RequestParam (name = "p", defaultValue = "1") int page, @RequestParam (name = "pageSize", defaultValue = "10") int pageSize){
+//        if (page < 1) {
+//            page = 1;
+//        }
+//        PageRequest pageRequest=PageRequest.of(page-1, pageSize);
+//        List<Payment> paymentSchedule = creditOfferService.getCreditOfferSchedule();
+//        int start = toIntExact(pageRequest.getOffset());
+//        int end = Math.min(start+pageRequest.getPageSize(),paymentSchedule.size());
+//        Page<Payment> paymentSchedulePage = new PageImpl<Payment>(
+//                paymentSchedule.subList(start, end),
+//                pageRequest,
+//                paymentSchedule.size());
+//        return  paymentSchedulePage;
+//    }
 
     @GetMapping("/addClient")
     public ClientShortDto addClient(@RequestParam Long id) {
