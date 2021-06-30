@@ -6,7 +6,10 @@ import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -87,8 +90,12 @@ public class CreditOfferForm {
         return amount;
     }
     public List<Payment> getPaymentSchedule(LocalDateTime dateOffer){
-        recalculatePaymentSchedule(dateOffer);
-        return this.paymentSchedule;
+        if(!duration.equals(null)&&!creditDto.getLimitation().equals(null)) {
+            recalculatePaymentSchedule(dateOffer);
+            return this.paymentSchedule;
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     public void setClientShortDto(Client client) {
@@ -113,5 +120,9 @@ public class CreditOfferForm {
 
     public ClientShortDto getClientShortDto() {
         return this.clientShortDto;
+    }
+
+    public void clearPaymentSchedule(){
+        paymentSchedule.clear();
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,9 +53,8 @@ public class CreditOfferService {
 
     @Transactional
     public void deleteDuration() {
-        List<Payment> payments = creditOfferForm.getPaymentSchedule(LocalDateTime.now());
-        payments.removeAll(payments);
         creditOfferForm.setDuration(null);
+        creditOfferForm.clearPaymentSchedule();
     }
 
     public void deleteClient() {
@@ -64,7 +64,7 @@ public class CreditOfferService {
     @Transactional
     public void deleteCredit() {
         creditOfferForm.getCreditDto().clear();
-        List<Payment> payments = creditOfferForm.getPaymentSchedule(LocalDateTime.now());
-        payments.removeAll(payments);
+        creditOfferForm.clearPaymentSchedule();
+
     }
 }

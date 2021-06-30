@@ -270,9 +270,9 @@
     </tr>
     </thead>
 </table>
-<button class="btn btn-outline-primary" ng-click="loadSchedulePaymentsPage(1)">Показать график платежей</button>
+<button ng-show="creditInOffer && durationForm" class="btn btn-outline-primary" ng-click="showPaymentsPage()">Показать график платежей</button>
 <p></p>
-<div ng-show="CreditOfferSchedule">
+<div ng-show="creditInOffer && durationForm">
 
 <table class="table">
     <thead>

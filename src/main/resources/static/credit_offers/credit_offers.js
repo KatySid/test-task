@@ -214,6 +214,11 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
                   $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
               });
           };
+
+   $scope.showPaymentsPage = function(){
+   $scope.loadSchedulePaymentsPage(1);
+   $scope.CreditOfferSchedule = false;
+   }
    $scope.closePaymentsPage = function(){
    $scope.CreditOfferSchedule = false;
    }
