@@ -1,63 +1,39 @@
 <p></p>
 <h3>Данные кредитного предложения</h3>
 <table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Добавить кредит</th>
-        <th scope="col">Добавить клиента</th>
-        <th scope="col">Добавить срок кредита в мес</th>
-    </tr>
-    </thead>
     <tbody>
     <td>
-        <button type="button" class="btn btn-outline-primary" ng-click="showCredits()">Добавить кредит</button>
+        <button ng-show = "!creditInOffer" type="button" class="btn btn-outline-primary" ng-click="showCredits()">Добавить кредит</button>
     </td>
     <td>
-        <button type="button" class="btn btn-outline-primary" ng-click="showClients()">Добавить клиента</button>
+        <button ng-show ="!clientInOffer" type="button" class="btn btn-outline-primary" ng-click="showClients()">Добавить клиента</button>
     </td>
     <td>
-        <button type="button" class="btn btn-outline-primary" ng-click="showDuration()">Добавить</button>
-    </td>
-    <td>
+        <button ng-show ="!durationForm" type="button" class="btn btn-outline-primary" ng-click="showDuration()">Добавить срок кредита</button>
     </td>
     </tbody>
 </table>
 <p></p>
-<table ng-show="duration>0" class="table">
-    <thead>
-    <tr>
-        <th scope="col">Срок кредита</th>
-        <th scope="col">{{creditOfferForm.duration}}</th>
-        <th scope="col">мес</th>
-        <td>
-            <button class="btn btn-outline-primary" ng-click="deleteDuration()">Удалить срок из предложения</button>
-        </td>
-    </tr>
-    </thead>
-</table>
-<p></p>
-<table ng-show="credit.limitation>0" class="table">
+<table ng-show="creditInOffer.limitation>0" class="table">
     <thead>
     <tr>
         <th scope="col">Лимит по кредиту</th>
-        <th scope="col">{{credit.limitation}}</th>
+        <th scope="col">{{creditInOffer.limitation}}</th>
         <th scope="col"> руб</th>
     </tr>
     </thead>
 </table >
-    <table ng-show="credit.percent>0" class="table">
+    <table ng-show="creditInOffer.percent>0" class="table">
     <thead>
     <tr>
         <th scope="col">Процент по кредиту</th>
-        <th scope="col">{{credit.percent}}</th>
+        <th scope="col">{{creditInOffer.percent}}</th>
         <th scope="col">%</th>
-        <th>
-            <button class="btn btn-outline-primary" ng-click="deleteCredit(p.id)">Удалить кредит из предложения</button>
-        </th>
     </tr>
     </thead>
 </table>
-<table ng-show ="client.lastName.lenght>0" class="table">
+<button ng-show = "creditInOffer.limitation>0" class="btn btn-outline-primary" ng-click="deleteCredit(p.id)">Удалить кредит из предложения</button>
+<table ng-show = "clientInOffer.lastName" class="table">
     <thead>
     <tr>
         <th scope="col">Фамилия</th>
@@ -71,15 +47,14 @@
     </thead>
     <tbody>
     <tr>
-        <td>{{client.lastName}}</td>
-        <td>{{client.name}}</td>
-        <td>{{client.patronymic}}</td>
-        <td>{{client.email}}</td>
-        <td>{{client.passport}}</td>
+        <td>{{clientInOffer.lastName}}</td>
+        <td>{{clientInOffer.name}}</td>
+        <td>{{clientInOffer.patronymic}}</td>
+        <td>{{clientInOffer.email}}</td>
+        <td>{{clientInOffer.passport}}</td>
         <td>
-            <button class="btn btn-outline-primary" ng-click="deleteClient(p.id)">Удалить из предложения</button>
+            <button class="btn btn-outline-primary" ng-click="deleteClient(p.id)">Удалить клиента из предложения</button>
         </td>
-
     </tr>
     </tbody>
 </table>
@@ -283,4 +258,58 @@
         <button type="button" class="btn btn-outline-primary" ng-click="closeCreditForm()">Закрыть список кредитов</button>
     </form>
 </div>
+<table ng-show="durationForm>0" class="table">
+    <thead>
+    <tr>
+        <th scope="col">Срок кредита</th>
+        <th scope="col">{{durationForm}}</th>
+        <th scope="col">мес</th>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="deleteDuration()">Удалить срок из предложения</button>
+        </td>
+    </tr>
+    </thead>
+</table>
+<button class="btn btn-outline-primary" ng-click="loadSchedulePaymentsPage(1)">Показать график платежей</button>
+<p></p>
+<div ng-show="CreditOfferSchedule">
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Дата платежа</th>
+        <th scope="col">Сумма гашения тела кредита</th>
+        <th scope="col">Сумма гашения процентов</th>
+        <th scope="col">Полная сумма платежа</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="payment in paymentsPage.content">
+        <td>{{payment.date}}</td>
+        <td>{{payment.bodyCreditPayment}}</td>
+        <td>{{payment.percentPayment}}</td>
+        <td>{{payment.amountPayment}}</td>
+    </tr>
+    </tbody>
+</table>
+<nav aria-label="Page navigation" ng-show = "paymentsPage.totalPages>1">
+    <ul class="pagination">
+        <li ng-class="paymentsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadSchedulePaymentsPage(1)">В начало</a>
+        </li>
 
+        <li ng-class="paymentsPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadSchedulePaymentsPage(paymentsPage.number)">Пред.</a>
+        </li>
+
+        <li ng-class="paymentsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+            ng-repeat="pageIndex in paginationArray">
+            <a class="page-link" ng-click="loadSchedulePaymentsPage(pageIndex)">{{pageIndex}}</a>
+        </li>
+
+        <li ng-class="paymentsPage.last ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadSchedulePaymentsPage(paymentsPage.number + 2)">След.</a>
+        </li>
+    </ul>
+</nav>
+    <button class="btn btn-outline-primary" ng-click="closePaymentsPage()">Закрыть график платежей</button>
+</div>

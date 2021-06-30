@@ -1,5 +1,6 @@
 package com.haulmont.testtask.controllers;
 
+import com.haulmont.testtask.dtos.ClientShortDto;
 import com.haulmont.testtask.dtos.CreditDto;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
@@ -47,7 +48,7 @@ public class CreditOfferController {
     }
 
     @GetMapping ("/paymentSchedule")
-    public Page<Payment> getCreditOfferSchedule(@RequestParam BigDecimal amount, @RequestParam (name = "p", defaultValue = "1") int page, @RequestParam (name = "pageSize", defaultValue = "10") int pageSize){
+    public Page<Payment> getCreditOfferSchedule(@RequestParam (name = "p", defaultValue = "1") int page, @RequestParam (name = "pageSize", defaultValue = "10") int pageSize){
         if (page < 1) {
             page = 1;
         }
@@ -63,13 +64,19 @@ public class CreditOfferController {
     }
 
     @GetMapping("/addClient")
-    public void addClient(@RequestParam Long id) {
+    public ClientShortDto addClient(@RequestParam Long id) {
         Optional<Client> client = clientService.findById(id);
         if (client.isPresent()) {
             creditOfferService.addClient(client.get());
+            return creditOfferService.getCreditOfferForm().getClientShortDto();
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/deleteClient")
+    public void deleteClient() {
+           creditOfferService.deleteClient();
     }
 
     @GetMapping("/percentPayment")
@@ -77,9 +84,15 @@ public class CreditOfferController {
         return creditOfferService.getCreditOfferForm().getSumPercentOfCredit();
     }
 
-    @GetMapping("/addDuration")
-    public Integer addDuration(@RequestParam Integer duration) {
-        return creditOfferService.addDuration(duration);
+    @GetMapping("/addDuration/{duration}")
+    public Integer addDuration(@PathVariable(name = "duration") Integer duration) {
+        creditOfferService.addDuration(duration);
+        return creditOfferService.getCreditOfferForm().getDuration();
+    }
+
+    @GetMapping("/deleteDuration")
+    public void deleteDuration() {
+        creditOfferService.deleteDuration();
     }
 
     @GetMapping("/addCredit")
@@ -89,6 +102,11 @@ public class CreditOfferController {
             creditOfferService.addCredit(credit.get());
         }
         return creditOfferService.getCreditOfferForm().getCreditDto();
+    }
+
+    @GetMapping("/deleteCredit")
+    public void deleteCredit() {
+        creditOfferService.deleteCredit();
     }
 
     @GetMapping("/clear")

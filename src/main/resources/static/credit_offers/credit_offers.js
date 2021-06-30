@@ -128,18 +128,19 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
      }
 
      $scope.addDuration = function(){
-            $http({
-                     url: contextPath + '/api/v1/credit_offers/addDuration',
-                     method: 'GET',
-                     params: {
-                               duration: duration
-                              }
-                 }).then(function (response) {
-                     $scope.duration = response.data;
+            $http.get(contextPath + '/api/v1/credit_offers/addDuration/'+ $scope.duration).then(function (response) {
+                     $scope.durationForm = response.data;
                      $scope.showDurationForm = false;
-                     $scope.loadCreditOfferForm();
                    });
     }
+
+    $scope.deleteDuration = function(){
+                $http.get(contextPath + '/api/v1/credit_offers/deleteDuration/').then(function (response) {
+                         $scope.durationForm = false;
+                       });
+    }
+
+
     $scope.addClientToOffer = function(clientId){
                 $http({
                          url: contextPath + '/api/v1/credit_offers/addClient',
@@ -148,12 +149,23 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
                                    id: clientId
                                   }
                      }).then(function (response) {
+                        $scope.clientInOffer = response.data;
                          $scope.showClientsList = false;
-                         $scope.loadCreditOfferForm();
+
                        });
         }
 
-        $scope.addCreditToOffer = function(creditId){
+    $scope.deleteClient = function(){
+                    $http({
+                             url: contextPath + '/api/v1/credit_offers/deleteClient',
+                             method: 'GET',
+                            }).then(function (response) {
+                            $scope.clientInOffer = false;
+                            });
+    }
+
+
+    $scope.addCreditToOffer = function(creditId){
                         $http({
                                  url: contextPath + '/api/v1/credit_offers/addCredit',
                                  method: 'GET',
@@ -163,11 +175,46 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
                              }).then(function (response) {
                                  $scope.creditInOffer = response.data;
                                  $scope.showCreditsList = false;
-                                 $scope.loadCreditOfferForm();
                                });
                 }
-//    loadPageCredits(1);
-//    loadPageClients(1);
+
+   $scope.deleteCredit = function(){
+                       $http({
+                                url: contextPath + '/api/v1/credit_offers/deleteCredit',
+                                method: 'GET',
+                               }).then(function (response) {
+                               $scope.creditInOffer = false;
+                               });
+       }
+
+   $scope.loadSchedulePaymentsPage = function(page){
+        $http({
+                  url: contextPath + '/api/v1/credit_offers/paymentSchedule',
+                  method: 'GET',
+                  params: {
+                            p: page,
+                            pageSize: 5
+                            }
+              }).then(function (response) {
+                  $scope.paymentsPage = response.data;
+                  $scope.CreditOfferSchedule = true;
+
+                  let minPageIndex = page - 2;
+                  if (minPageIndex < 1) {
+                      minPageIndex = 1;
+                  }
+
+                  let maxPageIndex = page + 2;
+                  if (maxPageIndex > $scope.paymentsPage.totalPages) {
+                      maxPageIndex = $scope.paymentsPage.totalPages;
+                  }
+
+                  $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
+              });
+          };
+   $scope.closePaymentsPage = function(){
+   $scope.CreditOfferSchedule = false;
+   }
     });
 
 

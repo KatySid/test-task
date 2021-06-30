@@ -29,6 +29,7 @@ public class CreditOfferForm {
         this.amount = BigDecimal.ZERO;
         this.creditDto = new CreditDto();
         this.clientShortDto = new ClientShortDto();
+        this.duration = 1;
 
     }
 
@@ -54,7 +55,7 @@ public class CreditOfferForm {
                     Payment payment = new Payment();
                     payment.setBodyCreditPayment(bodyCreditPayment);
                     payment.setDate(dateTime.plusMonths(i));
-                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate());
+                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate().divide(new BigDecimal(100)));
                     payment.setPercentPayment(bodyPercentPayment);
                     paymentSchedule.add(payment);
                     remainder = remainder.subtract(bodyCreditPayment);
@@ -105,5 +106,9 @@ public class CreditOfferForm {
 
     public CreditDto getCreditDto() {
         return this.creditDto;
+    }
+
+    public ClientShortDto getClientShortDto() {
+        return this.clientShortDto;
     }
 }

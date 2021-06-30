@@ -2,15 +2,16 @@ package com.haulmont.testtask.utils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Payment {
-    private LocalDateTime date; //дата платежа
+    private String date; //дата платежа
     private BigDecimal amountPayment; // сумма платежа
     private BigDecimal percentPayment; // сумма гашения процента
     private BigDecimal bodyCreditPayment; //тело гашения кредита
 
     public void setDate(LocalDateTime date) {
-        this.date = date;
+        this.date = date.format(DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss" )).replace("T", " ");
     }
 
 
@@ -27,7 +28,7 @@ public class Payment {
         return amountPayment;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 

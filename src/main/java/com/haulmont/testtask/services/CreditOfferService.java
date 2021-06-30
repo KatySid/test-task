@@ -6,11 +6,9 @@ import com.haulmont.testtask.utils.CreditOfferForm;
 import com.haulmont.testtask.utils.Payment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,8 +23,11 @@ public class CreditOfferService {
     }
 
     public CreditOfferForm getCreditOfferForm(){
+
         return creditOfferForm;
     }
+
+    @Transactional
     public List<Payment> getCreditOfferSchedule() {
         creditOfferForm.recalculatePaymentSchedule(LocalDateTime.now());
         return creditOfferForm.getPaymentSchedule();
@@ -44,8 +45,21 @@ public class CreditOfferService {
         creditOfferForm.clearForm();
     }
 
+    @Transactional
     public Integer addDuration(Integer duration) {
         creditOfferForm.setDuration(duration);
         return creditOfferForm.getDuration();
+    }
+
+    public void deleteDuration() {
+        creditOfferForm.setDuration(null);
+    }
+
+    public void deleteClient() {
+        creditOfferForm.getClientShortDto().clear();
+    }
+
+    public void deleteCredit() {
+        creditOfferForm.getCreditDto().clear();
     }
 }
