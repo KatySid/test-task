@@ -29,13 +29,13 @@ import static java.lang.Math.toIntExact;
 @RequestMapping("/api/v1/credit_offers_form")
 @Slf4j
 
-public class CreditOfferController {
+public class CreditOfferFormController {
     private  CreditOfferService creditOfferService;
     private ClientService clientService;
     private CreditService creditService;
 
     @Autowired
-    public CreditOfferController(CreditOfferService creditOfferService, ClientService clientService, CreditService creditService){
+    public CreditOfferFormController(CreditOfferService creditOfferService, ClientService clientService, CreditService creditService){
         this.creditOfferService = creditOfferService;
         this.clientService = clientService;
         this.creditService = creditService;
