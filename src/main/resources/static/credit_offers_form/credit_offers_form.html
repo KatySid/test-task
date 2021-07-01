@@ -3,13 +3,13 @@
 <table class="table">
     <tbody>
     <td>
-        <button ng-show = "!creditInOffer" type="button" class="btn btn-outline-primary" ng-click="showCredits()">Добавить кредит</button>
+        <button ng-show = "!creditInOffer" type="button" class="btn btn-outline-primary" ng-click="showCredits()">Добавьте кредит</button>
     </td>
     <td>
-        <button ng-show ="!clientInOffer" type="button" class="btn btn-outline-primary" ng-click="showClients()">Добавить клиента</button>
+        <button ng-show ="!clientInOffer" type="button" class="btn btn-outline-primary" ng-click="showClients()">Добавьте клиента</button>
     </td>
     <td>
-        <button ng-show ="!durationForm" type="button" class="btn btn-outline-primary" ng-click="showDuration()">Добавить срок кредита</button>
+        <button ng-show ="!durationForm" type="button" class="btn btn-outline-primary" ng-click="showDuration()">Добавьте срок кредита</button>
     </td>
     </tbody>
 </table>
@@ -142,33 +142,6 @@
     <button type="button" class="btn btn-outline-primary" ng-click="closeClientsPage()">Закрыть список клиентов</button>
     <button type="button" class="btn btn-outline-primary" ng-click="addNewClient()">Добавить нового клиента</button>
 </div>
-<div ng-show = "showClientCreateForm">
-    <h4>Введите данные нового клиента</h4>
-    <form novalidate ng-submit="createNewClient()">
-        <div class="mb-3">
-            <label for="inputLastName" class="form-label">Фамилия</label>
-            <input type="text" class="form-control" ng-model="newClientDto.lastName" id="inputLastName" aria-describedby="lastNameHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputName" class="form-label">Имя</label>
-            <input type="text" class="form-control" ng-model="newClientDto.name" id="inputName" aria-describedby="nameHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputPatronymic" class="form-label">Отчество</label>
-            <input type="text" class="form-control" ng-model="newClientDto.patronymic" id="inputPatronymic" aria-describedby="patronymicHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputEmail" class="form-label">e-mail</label>
-            <input type="text" class="form-control" ng-model="newClientDto.email" id="inputEmail" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputPassport" class="form-label">Номер паспорта</label>
-            <input type="text" class="form-control" ng-model="newClientDto.passport" id="inputPassport" aria-describedby="passportHelp">
-        </div>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <button type="button" class="btn btn-outline-primary" ng-click="closeClientForm()">Закрыть форму создания клиента</button>
-    </form>
-</div>
 <div ng-show = "showCreditsList">
     <p></p>
     <h4>Список кредитов</h4>
@@ -239,25 +212,8 @@
         </ul>
     </nav>
     <button type="button" class="btn btn-outline-primary" ng-click="closeShowCredits()">Закрыть список кредитов</button>
-    <button type="button" class="btn btn-outline-primary" ng-click="addNewCredit()">Добавить новый кредит</button>
 </div>
-<p></p>
-<div ng-show = "showCreditCreateForm">
-    <h4>Введите данные кредита</h4>
-    <form novalidate ng-submit="createNewCredit()">
-        <div class="mb-3">
-            <label for="inputLimitation" class="form-label">Лимит по кредиту</label>
-            <input type="number" class="form-control" ng-model="newCreditDto.limitation" id="inputLimitation" aria-describedby="minAmountHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputPercent" class="form-label">Процент</label>
-            <input type="number" class="form-control" ng-model="newCreditDto.percent" id="inputPercent" aria-describedby="percentHelp">
-        </div>
 
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <button type="button" class="btn btn-outline-primary" ng-click="closeCreditForm()">Закрыть список кредитов</button>
-    </form>
-</div>
 <table ng-show="durationForm>0" class="table">
     <thead>
     <tr>
@@ -270,11 +226,11 @@
     </tr>
     </thead>
 </table>
-<button ng-show="creditInOffer && durationForm" class="btn btn-outline-primary" ng-click="showPaymentsPage()">Показать график платежей</button>
+<button ng-show="creditInOffer && durationForm " class="btn btn-outline-primary" ng-click="showPaymentsPage()">Показать график платежей</button>
 <p></p>
-<div ng-show="creditInOffer && durationForm">
 
-<table class="table">
+<div ng-show="creditInOffer && durationForm && showTableSchedule">
+<table ng-show="paymentsPage" class="table">
     <thead>
     <tr>
         <th scope="col">Дата платежа</th>
@@ -313,4 +269,30 @@
     </ul>
 </nav>
     <button class="btn btn-outline-primary" ng-click="closePaymentsPage()">Закрыть график платежей</button>
+
+</div>
+<div>
+<button ng-show="creditInOffer && durationForm" class="btn btn-outline-primary" ng-click="getAmount()">Расчитать полную сумму кредита</button>
+    <table ng-show="amount>0 && creditInOffer && durationForm" class="table">
+        <thead>
+        <tr>
+            <th scope="col">Полная сумма кредита</th>
+            <th scope="col">{{amount}}</th>
+            <th scope="col">руб</th>
+        </tr>
+        </thead>
+    </table>
+<button ng-show="creditInOffer && durationForm" class="btn btn-outline-primary" ng-click="getSumPercent()">Расчитать полную сумму процентов по кредиту</button>
+    <table ng-show="sumPercent>0 && creditInOffer && durationForm" class="table">
+        <thead>
+        <tr>
+            <th scope="col">Полная сумма процентов по кредиту</th>
+            <th scope="col">{{sumPercent}}</th>
+            <th scope="col">руб</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div>
+    <button ng-show="creditInOffer && durationForm" class="btn btn-outline-primary" ng-click="saveCreditOffer()">Сохранить предложение</button>
 </div>

@@ -1,19 +1,48 @@
-package com.haulmont.testtask.utils;
+package com.haulmont.testtask.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
+@Entity
+@Table(name = "payments")
 public class Payment {
-    private String date; //дата платежа
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column
+    private LocalDateTime localdate; //дата платежа
+    @Column
     private BigDecimal amountPayment; // сумма платежа
+    @Column
     private BigDecimal percentPayment; // сумма гашения процента
+    @Column
     private BigDecimal bodyCreditPayment; //тело гашения кредита
 
-    public void setDate(LocalDateTime date) {
-        this.date = date.format(DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss" )).replace("T", " ");
-    }
+    @ManyToOne
+    @JoinColumn(name = "credit_offer_id")
+    private CreditOffer creditOffer;
 
+    @Column (name ="created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column (name ="updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    public Long getId(){
+        return this.id;
+    };
+
+    public void setDate(LocalDateTime date) {
+        this.localdate = date;
+    }
 
     public void setPercentPayment(BigDecimal percentPayment) {
         this.percentPayment = percentPayment;
@@ -28,8 +57,8 @@ public class Payment {
         return amountPayment;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDateTime getLocalDate() {
+        return this.localdate;
     }
 
     public BigDecimal getPercentPayment() {
@@ -39,5 +68,6 @@ public class Payment {
     public BigDecimal getBodyCreditPayment() {
         return bodyCreditPayment;
     }
+
 
 }

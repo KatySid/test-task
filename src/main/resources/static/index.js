@@ -28,9 +28,9 @@
                   templateUrl: 'credit/credits.html',
                   controller: 'creditsController'
             })
-            .when('/credit_offers', {
-                             templateUrl: 'credit_offers/credit_offers.html',
-                             controller: 'creditOffersController'
+            .when('/credit_offers_form', {
+                             templateUrl: 'credit_offers_form/credit_offers_form.html',
+                             controller: 'creditOffersFormController'
             })
             .when('/client_info/:clientIdParam', {
                     templateUrl: 'client_info/client_info.html',

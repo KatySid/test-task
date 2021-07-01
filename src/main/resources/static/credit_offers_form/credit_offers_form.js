@@ -1,11 +1,12 @@
-angular.module('app').controller('creditOffersController', function ($scope, $http, $localStorage, $routeParams, $location) {
+angular.module('app').controller('creditOffersFormController', function ($scope, $http, $localStorage, $routeParams, $location) {
     const contextPath = 'http://localhost:8189/app';
 
     $scope.showDurationForm = false;
+    $scope.showTableSchedule=true;
 
     $scope.loadCreditOfferForm = function(){
                 $http({
-                         url: contextPath + '/api/v1/credit_offers',
+                         url: contextPath + '/api/v1/credit_offers_form',
                          method: 'GET'
                      }).then(function (response) {
                          $scope.creditOfferForm = response.data;
@@ -128,23 +129,24 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
      }
 
      $scope.addDuration = function(){
-            $http.get(contextPath + '/api/v1/credit_offers/addDuration/'+ $scope.duration).then(function (response) {
+            $http.get(contextPath + '/api/v1/credit_offers_form/addDuration/'+ $scope.duration).then(function (response) {
                      $scope.durationForm = response.data;
                      $scope.showDurationForm = false;
                    });
     }
 
     $scope.deleteDuration = function(){
-                $http.get(contextPath + '/api/v1/credit_offers/deleteDuration/').then(function (response) {
+                $http.get(contextPath + '/api/v1/credit_offers_form/deleteDuration/').then(function (response) {
                          $scope.durationForm = false;
                          $scope.CreditOfferSchedule = false;
+                         $.scope.loadSchedulePaymentsPage(1);
                        });
     }
 
 
     $scope.addClientToOffer = function(clientId){
                 $http({
-                         url: contextPath + '/api/v1/credit_offers/addClient',
+                         url: contextPath + '/api/v1/credit_offers_form/addClient',
                          method: 'GET',
                          params: {
                                    id: clientId
@@ -158,7 +160,7 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
 
     $scope.deleteClient = function(){
                     $http({
-                             url: contextPath + '/api/v1/credit_offers/deleteClient',
+                             url: contextPath + '/api/v1/credit_offers_form/deleteClient',
                              method: 'GET',
                             }).then(function (response) {
                             $scope.clientInOffer = false;
@@ -168,7 +170,7 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
 
     $scope.addCreditToOffer = function(creditId){
                         $http({
-                                 url: contextPath + '/api/v1/credit_offers/addCredit',
+                                 url: contextPath + '/api/v1/credit_offers_form/addCredit',
                                  method: 'GET',
                                  params: {
                                            id: creditId
@@ -176,22 +178,23 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
                              }).then(function (response) {
                                  $scope.creditInOffer = response.data;
                                  $scope.showCreditsList = false;
-                               });
+                             });
                 }
 
    $scope.deleteCredit = function(){
                        $http({
-                                url: contextPath + '/api/v1/credit_offers/deleteCredit',
+                                url: contextPath + '/api/v1/credit_offers_form/deleteCredit',
                                 method: 'GET',
                                }).then(function (response) {
                                $scope.creditInOffer = false;
                                $scope.CreditOfferSchedule = false;
+                               $scope.showTableSchedule=false;
                                });
        }
 
    $scope.loadSchedulePaymentsPage = function(page){
         $http({
-                  url: contextPath + '/api/v1/credit_offers/paymentSchedule',
+                  url: contextPath + '/api/v1/credit_offers_form/paymentSchedule',
                   method: 'GET',
                   params: {
                             p: page,
@@ -215,13 +218,53 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
               });
           };
 
+   $scope.getAmount = function(){
+   $http({
+           url: contextPath + '/api/v1/credit_offers_form/amount',
+           method: 'GET',
+           }).then(function (response) {
+           $scope.amount = response.data;
+           });
+   }
+
+   $scope.getSumPercent = function(){
+      $http({
+              url: contextPath + '/api/v1/credit_offers_form/sumPercent',
+              method: 'GET',
+              }).then(function (response) {
+              $scope.sumPercent = response.data;
+              });
+      }
+
    $scope.showPaymentsPage = function(){
-   $scope.loadSchedulePaymentsPage(1);
-   $scope.CreditOfferSchedule = false;
+       $scope.loadSchedulePaymentsPage(1);
+       $scope.CreditOfferSchedule = false;
+       $scope.showTableSchedule=true;
+       $scope.getAmount();
+       $scope.getSumPercent();
    }
+
    $scope.closePaymentsPage = function(){
-   $scope.CreditOfferSchedule = false;
+       $scope.CreditOfferSchedule = false;
+       $scope.showTableSchedule=false;
    }
+
+    $scope.clearForm = function () {
+        $http({
+            url: contextPath + '/api/v1/credit_offers_form/clear',
+            method: 'GET'
+        }).then(function (response) {
+            $scope.loadSchedulePaymentsPage(1);
+        });
+    }
+
+   $scope.saveCreditOffer= function(){
+   $http.post(contextPath + '/api/v1/credit_offers').then(function successCallback(response){
+               console.log("Предложение сохранено")
+               $scope.clearForm();
+               });
+   }
+
     });
 
 

@@ -2,9 +2,9 @@ package com.haulmont.testtask.utils;
 
 import com.haulmont.testtask.dtos.ClientShortDto;
 import com.haulmont.testtask.dtos.CreditDto;
+import com.haulmont.testtask.dtos.PaymentDto;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class CreditOfferForm {
         private CreditDto creditDto;
         private BigDecimal amount;
         private Integer duration;
-        private List<Payment> paymentSchedule;
+        private List<PaymentDto> paymentSchedule;
 
 
     @PostConstruct
@@ -53,17 +53,18 @@ public class CreditOfferForm {
         }
 
     private void recalculatePaymentSchedule(LocalDateTime dateTime){
+        amount = BigDecimal.ZERO;
         paymentSchedule.removeAll(paymentSchedule);
         BigDecimal remainder = this.creditDto.getLimitation();
-        BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 2, RoundingMode.HALF_UP);
+        BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 4, RoundingMode.DOWN);
                 for (int i = 0; i < this.duration.intValue(); i++) {
-                    Payment payment = new Payment();
-                    payment.setBodyCreditPayment(bodyCreditPayment);
-                    payment.setDate(dateTime.plusMonths(i));
-                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate().divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
-                    payment.setPercentPayment(bodyPercentPayment);
-                    BigDecimal amountPayment = payment.getAmountPayment();
-                    paymentSchedule.add(payment);
+                    PaymentDto paymentDto = new PaymentDto();
+                    paymentDto.setBodyCreditPayment(bodyCreditPayment);
+                    paymentDto.setDate(dateTime.plusMonths(i));
+                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate().divide(new BigDecimal(12),4,RoundingMode.DOWN));
+                    paymentDto.setPercentPayment(bodyPercentPayment);
+                    BigDecimal amountPayment = paymentDto.getAmountPayment();
+                    paymentSchedule.add(paymentDto);
                     remainder = remainder.subtract(bodyCreditPayment);
                     amount=amount.add(amountPayment);
                 };
@@ -71,27 +72,34 @@ public class CreditOfferForm {
         }
 
         public BigDecimal calculatePercentRate(){
-            BigDecimal percentRate = this.creditDto.getPercent().divide(new BigDecimal(100/12));
+            BigDecimal percentRate = this.creditDto.getPercent().divide(new BigDecimal(100),4,RoundingMode.DOWN);
             return percentRate;
         }
 
         public BigDecimal getSumPercentOfCredit(){
         BigDecimal sumPercentOfCredit = BigDecimal.ZERO;
-        recalculatePaymentSchedule(LocalDateTime.now());
             for (int i = 0; i < paymentSchedule.size(); i++) {
-                sumPercentOfCredit.add(paymentSchedule.get(i).getPercentPayment());
+                sumPercentOfCredit=sumPercentOfCredit.add(paymentSchedule.get(i).getPercentPayment());
             }
             return sumPercentOfCredit;
         }
 
     public BigDecimal getAmount() {
-        amount = BigDecimal.ZERO;
-        recalculatePaymentSchedule(LocalDateTime.now());
         return amount;
     }
-    public List<Payment> getPaymentSchedule(LocalDateTime dateOffer){
+
+    public List<PaymentDto> getPaymentSchedule(LocalDateTime dateOffer){
         if(!duration.equals(null)&&!creditDto.getLimitation().equals(null)) {
             recalculatePaymentSchedule(dateOffer);
+            return this.paymentSchedule;
+        }else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public List<PaymentDto> getPaymentSchedule(){
+        if(!duration.equals(null)&&!creditDto.getLimitation().equals(null)) {
+            recalculatePaymentSchedule(LocalDateTime.now());
             return this.paymentSchedule;
         }else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

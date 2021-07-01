@@ -1,17 +1,18 @@
 package com.haulmont.testtask.services;
 
+import com.haulmont.testtask.dtos.PaymentDto;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import com.haulmont.testtask.utils.CreditOfferForm;
-import com.haulmont.testtask.utils.Payment;
+import com.haulmont.testtask.models.Payment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class CreditOfferService {
     }
 
     @Transactional
-    public List<Payment> getCreditOfferSchedule() {
+    public List<PaymentDto> getCreditOfferSchedule() {
         return creditOfferForm.getPaymentSchedule(LocalDateTime.now());
     }
 
@@ -66,5 +67,13 @@ public class CreditOfferService {
         creditOfferForm.getCreditDto().clear();
         creditOfferForm.clearPaymentSchedule();
 
+    }
+
+    public BigDecimal getAmount() {
+        return creditOfferForm.getAmount();
+    }
+
+    public BigDecimal getSumPercent() {
+        return creditOfferForm.getSumPercentOfCredit();
     }
 }

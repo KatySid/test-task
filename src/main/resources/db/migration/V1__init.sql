@@ -44,6 +44,18 @@ CREATE TABLE credits_offers (
     updated_at              timestamp default current_timestamp
 );
 
+DROP TABLE IF EXISTS payments CASCADE;
+CREATE TABLE payments (
+    id                      bigserial primary key,
+    localdate               timestamp,
+    amountPayment           numeric(16,2),
+    percentPayment          numeric(16,2),
+    bodyCreditPayment       numeric(16,2),
+    credit_offer_id         bigint not null references credits_offers (id),
+    created_at              timestamp default current_timestamp,
+    updated_at              timestamp default current_timestamp
+);
+
 INSERT INTO banks (title) VALUES
 ('СБЕР'),
 ('ВТБ');
