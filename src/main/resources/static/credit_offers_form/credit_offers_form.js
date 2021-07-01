@@ -254,7 +254,7 @@ angular.module('app').controller('creditOffersFormController', function ($scope,
             url: contextPath + '/api/v1/credit_offers_form/clear',
             method: 'GET'
         }).then(function (response) {
-            $scope.loadSchedulePaymentsPage(1);
+
         });
     }
 

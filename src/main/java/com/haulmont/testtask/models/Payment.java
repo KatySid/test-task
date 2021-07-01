@@ -1,10 +1,12 @@
 package com.haulmont.testtask.models;
 
+import com.haulmont.testtask.dtos.PaymentDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,13 +17,17 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column
-    private LocalDateTime localdate; //дата платежа
-    @Column
+
+    @Column (name = "localdate")
+    private LocalDate localdate; //дата платежа
+
+    @Column (name = "amount_payment")
     private BigDecimal amountPayment; // сумма платежа
-    @Column
+
+    @Column(name = "percent_payment")
     private BigDecimal percentPayment; // сумма гашения процента
-    @Column
+
+    @Column(name = "body_credit_payment")
     private BigDecimal bodyCreditPayment; //тело гашения кредита
 
     @ManyToOne
@@ -36,11 +42,21 @@ public class Payment {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public Payment() {
+    }
+
+    public Payment(PaymentDto paymentDto) {
+        this.localdate = paymentDto.getDate();
+        this.amountPayment = paymentDto.getAmountPayment();
+        this.percentPayment = paymentDto.getPercentPayment();
+        this.bodyCreditPayment =paymentDto.getBodyCreditPayment();
+    }
+
     public Long getId(){
         return this.id;
     };
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.localdate = date;
     }
 
@@ -52,12 +68,16 @@ public class Payment {
         this.bodyCreditPayment = bodyCreditPayment;
     }
 
+    public void setCreditOffer(CreditOffer creditOffer) {
+        this.creditOffer = creditOffer;
+    }
+
     public BigDecimal getAmountPayment(){
         amountPayment=percentPayment.add(bodyCreditPayment);
         return amountPayment;
     }
 
-    public LocalDateTime getLocalDate() {
+    public LocalDate getLocalDate() {
         return this.localdate;
     }
 

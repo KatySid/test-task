@@ -1,0 +1,53 @@
+<p></p>
+<h3>Список оформленных предложений</h3>
+<p></p>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Дата оформления</th>
+        <th scope="col">Процент по кредиту</th>
+        <th scope="col">Лимит по кредиту</th>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Отчество</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in creditOffersPage.content">
+        <td></td>
+        <td>{{p.creditDto.percent}}</td>
+        <td>{{p.creditDto.limitation}}</td>
+        <td>{{p.clientShortDto.lastName}}</td>
+        <td>{{p.clientShortDto.name}}</td>
+        <td>{{p.clientShortDto.patronymic}}</td>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="showCreditOffersInfo(p.id)">Посмотреть</button>
+        </td>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="deleteCreditOffers(p.id)">Удалить</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<nav aria-label="Page navigation" ng-show = "creditOffersPage.totalPages>1">
+    <ul class="pagination">
+        <li ng-class="creditOffersPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCreditOffers(1)">В начало</a>
+        </li>
+
+        <li ng-class="creditOffersPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCreditOffers(creditOffersPage.number)">Пред.</a>
+        </li>
+
+        <li ng-class="creditOffersPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+            ng-repeat="pageIndex in paginationArray">
+            <a class="page-link" ng-click="loadPageCreditOffers(pageIndex)">{{pageIndex}}</a>
+        </li>
+
+        <li ng-class="creditOffersPage.last ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCreditOffers(creditOffersPage.number + 2)">След.</a>
+        </li>
+    </ul>
+</nav>

@@ -11,6 +11,15 @@ angular.module('app').controller('clientInfoController', function ($scope, $http
                 });
          }
 
+    $scope.loadCreditOffers = function () {
+         $http({
+                    url: contextPath + '/api/v1/clients/credit_offers/' + $routeParams.clientIdParam,
+                    method: 'GET'
+                }).then(function (response) {
+                    $scope.clientsCreditOffers = response.data;
+                });
+         }
+
     $scope.updateClient = function () {
             $scope.showClientEditForm = true;
 
@@ -54,6 +63,7 @@ angular.module('app').controller('clientInfoController', function ($scope, $http
                 }
 
     $scope.loadClient();
+    $scope.loadCreditOffers();
 
     });
 

@@ -3,6 +3,7 @@ package com.haulmont.testtask.services;
 import com.haulmont.testtask.dtos.ClientDto;
 import com.haulmont.testtask.models.Bank;
 import com.haulmont.testtask.models.Client;
+import com.haulmont.testtask.models.CreditOffer;
 import com.haulmont.testtask.repositories.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -71,4 +72,9 @@ public class ClientService  {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
         }
 
-}
+    public List<CreditOffer> findPageOffers(Long id) {
+        Client client = clientRepository.findById(id).get();
+        List<CreditOffer> creditOffers = client.getCreditOffers();
+        return creditOffers;
+    }
+ }

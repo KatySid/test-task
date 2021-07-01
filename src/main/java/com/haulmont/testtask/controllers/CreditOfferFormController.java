@@ -6,7 +6,7 @@ import com.haulmont.testtask.dtos.PaymentDto;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import com.haulmont.testtask.services.ClientService;
-import com.haulmont.testtask.services.CreditOfferService;
+import com.haulmont.testtask.services.CreditOfferFormService;
 import com.haulmont.testtask.services.CreditService;
 import com.haulmont.testtask.utils.CreditOfferForm;
 import lombok.extern.slf4j.Slf4j;
@@ -30,20 +30,20 @@ import static java.lang.Math.toIntExact;
 @Slf4j
 
 public class CreditOfferFormController {
-    private  CreditOfferService creditOfferService;
+    private CreditOfferFormService creditOfferFormService;
     private ClientService clientService;
     private CreditService creditService;
 
     @Autowired
-    public CreditOfferFormController(CreditOfferService creditOfferService, ClientService clientService, CreditService creditService){
-        this.creditOfferService = creditOfferService;
+    public CreditOfferFormController(CreditOfferFormService creditOfferFormService, ClientService clientService, CreditService creditService){
+        this.creditOfferFormService = creditOfferFormService;
         this.clientService = clientService;
         this.creditService = creditService;
     }
 
     @GetMapping
     public CreditOfferForm getCreditOffer(){
-        return creditOfferService.getCreditOfferForm();
+        return creditOfferFormService.getCreditOfferForm();
     }
 
     @GetMapping ("/paymentSchedule")
@@ -52,7 +52,7 @@ public class CreditOfferFormController {
             page = 1;
         }
         PageRequest pageRequest=PageRequest.of(page-1, pageSize);
-        List<PaymentDto> paymentSchedule = creditOfferService.getCreditOfferSchedule();
+        List<PaymentDto> paymentSchedule = creditOfferFormService.getCreditOfferSchedule();
         int start = toIntExact(pageRequest.getOffset());
         int end = Math.min(start+pageRequest.getPageSize(),paymentSchedule.size());
         Page<PaymentDto> paymentSchedulePage = new PageImpl<PaymentDto>(
@@ -66,8 +66,8 @@ public class CreditOfferFormController {
     public ClientShortDto addClient(@RequestParam Long id) {
         Optional<Client> client = clientService.findById(id);
         if (client.isPresent()) {
-            creditOfferService.addClient(client.get());
-            return creditOfferService.getCreditOfferForm().getClientShortDto();
+            creditOfferFormService.addClient(client.get());
+            return creditOfferFormService.getCreditOfferForm().getClientShortDto();
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -75,51 +75,51 @@ public class CreditOfferFormController {
 
     @GetMapping("/deleteClient")
     public void deleteClient() {
-           creditOfferService.deleteClient();
+           creditOfferFormService.deleteClient();
     }
 
     @GetMapping("/percentPayment")
     public BigDecimal getPercentPayment() {
-        return creditOfferService.getCreditOfferForm().getSumPercentOfCredit();
+        return creditOfferFormService.getCreditOfferForm().getSumPercentOfCredit();
     }
 
     @GetMapping("/addDuration/{duration}")
     public Integer addDuration(@PathVariable(name = "duration") Integer duration) {
-        creditOfferService.addDuration(duration);
-        return creditOfferService.getCreditOfferForm().getDuration();
+        creditOfferFormService.addDuration(duration);
+        return creditOfferFormService.getCreditOfferForm().getDuration();
     }
 
     @GetMapping("/deleteDuration")
     public void deleteDuration() {
-        creditOfferService.deleteDuration();
+        creditOfferFormService.deleteDuration();
     }
 
     @GetMapping("/addCredit")
     public CreditDto addCredit(@RequestParam Long id) {
             Optional <Credit> credit = creditService.findById(id);
         if (credit.isPresent()) {
-            creditOfferService.addCredit(credit.get());
+            creditOfferFormService.addCredit(credit.get());
         }
-        return creditOfferService.getCreditOfferForm().getCreditDto();
+        return creditOfferFormService.getCreditOfferForm().getCreditDto();
     }
 
     @GetMapping("/deleteCredit")
     public void deleteCredit() {
-        creditOfferService.deleteCredit();
+        creditOfferFormService.deleteCredit();
     }
 
     @GetMapping("/clear")
     public void clearForm() {
-        creditOfferService.clearForm();
+        creditOfferFormService.clearForm();
     }
 
     @GetMapping ("/amount")
     public BigDecimal getAmount(){
-        return creditOfferService.getAmount();
+        return creditOfferFormService.getAmount();
     }
 
     @GetMapping ("/sumPercent")
     public BigDecimal getSumPercent(){
-        return creditOfferService.getSumPercent();
+        return creditOfferFormService.getSumPercent();
     }
 }

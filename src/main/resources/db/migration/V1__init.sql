@@ -33,8 +33,8 @@ create table credits (
     created_at              timestamp default current_timestamp,
     updated_at              timestamp default current_timestamp
 );
-DROP TABLE IF EXISTS credits_offers CASCADE;
-CREATE TABLE credits_offers (
+DROP TABLE IF EXISTS credit_offers CASCADE;
+CREATE TABLE credit_offers (
     id                      bigserial primary key,
     amount                  numeric(16,2),
     duration                numeric(8,2),
@@ -48,10 +48,10 @@ DROP TABLE IF EXISTS payments CASCADE;
 CREATE TABLE payments (
     id                      bigserial primary key,
     localdate               timestamp,
-    amountPayment           numeric(16,2),
-    percentPayment          numeric(16,2),
-    bodyCreditPayment       numeric(16,2),
-    credit_offer_id         bigint not null references credits_offers (id),
+    amount_payment          numeric(16,2),
+    percent_payment         numeric(16,2),
+    body_credit_payment     numeric(16,2),
+    credit_offer_id          bigint not null references credit_offers (id),
     created_at              timestamp default current_timestamp,
     updated_at              timestamp default current_timestamp
 );

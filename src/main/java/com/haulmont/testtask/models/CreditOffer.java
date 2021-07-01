@@ -9,13 +9,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-@Table(name = "credit_offers_form")
+@Table(name = "credit_offers")
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class CreditOffer {
     @Id
@@ -48,4 +48,7 @@ public class CreditOffer {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public CreditOffer() {
+        this.paymentSchedule = new ArrayList<>();
+    }
 }

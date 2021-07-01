@@ -226,7 +226,7 @@
     </tr>
     </thead>
 </table>
-<button ng-show="creditInOffer && durationForm " class="btn btn-outline-primary" ng-click="showPaymentsPage()">Показать график платежей</button>
+<button ng-show="creditInOffer && durationForm " class="btn btn-outline-primary" ng-click="showPaymentsPage()">Рассчитать кредитное предложение</button>
 <p></p>
 
 <div ng-show="creditInOffer && durationForm && showTableSchedule">
@@ -268,11 +268,7 @@
         </li>
     </ul>
 </nav>
-    <button class="btn btn-outline-primary" ng-click="closePaymentsPage()">Закрыть график платежей</button>
-
-</div>
-<div>
-<button ng-show="creditInOffer && durationForm" class="btn btn-outline-primary" ng-click="getAmount()">Расчитать полную сумму кредита</button>
+<!--    <button class="btn btn-outline-primary" ng-click="closePaymentsPage()">Закрыть график платежей</button>-->
     <table ng-show="amount>0 && creditInOffer && durationForm" class="table">
         <thead>
         <tr>
@@ -282,7 +278,6 @@
         </tr>
         </thead>
     </table>
-<button ng-show="creditInOffer && durationForm" class="btn btn-outline-primary" ng-click="getSumPercent()">Расчитать полную сумму процентов по кредиту</button>
     <table ng-show="sumPercent>0 && creditInOffer && durationForm" class="table">
         <thead>
         <tr>

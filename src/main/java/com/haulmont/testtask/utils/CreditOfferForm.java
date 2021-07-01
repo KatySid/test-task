@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class CreditOfferForm {
             paymentSchedule.clear();
         }
 
-    private void recalculatePaymentSchedule(LocalDateTime dateTime){
+    private void recalculatePaymentSchedule(LocalDate dateTime){
         amount = BigDecimal.ZERO;
         paymentSchedule.removeAll(paymentSchedule);
         BigDecimal remainder = this.creditDto.getLimitation();
@@ -88,7 +89,7 @@ public class CreditOfferForm {
         return amount;
     }
 
-    public List<PaymentDto> getPaymentSchedule(LocalDateTime dateOffer){
+    public List<PaymentDto> getPaymentSchedule(LocalDate dateOffer){
         if(!duration.equals(null)&&!creditDto.getLimitation().equals(null)) {
             recalculatePaymentSchedule(dateOffer);
             return this.paymentSchedule;
@@ -99,7 +100,7 @@ public class CreditOfferForm {
 
     public List<PaymentDto> getPaymentSchedule(){
         if(!duration.equals(null)&&!creditDto.getLimitation().equals(null)) {
-            recalculatePaymentSchedule(LocalDateTime.now());
+            recalculatePaymentSchedule(LocalDate.now());
             return this.paymentSchedule;
         }else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

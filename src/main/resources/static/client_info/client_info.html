@@ -49,20 +49,34 @@
         <button type="button" class="btn btn-outline-primary" ng-click="closeForm()">Закрыть</button>
     </form>
 </div>
-<!--<div>-->
-<!--    <button class="btn btn-outline-primary" ng-click="updateClient(client.id)">Редактировать</button>-->
-<!--</div>-->
-<!--<p></p>-->
-<!--<h3>Партнеры клиента</h3>-->
-<!--<table class="table">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th scope="col">Название банка</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr ng-repeat="oi in client.bankList">-->
-<!--        <td>{{oi.title}}</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
+<div>
+<table ng-show ="creditOffersPage" class="table">
+    <p>Список предложений</p>
+    <thead>
+    <tr>
+        <th scope="col">Дата оформления</th>
+        <th scope="col">Процент по кредиту</th>
+        <th scope="col">Лимит по кредиту</th>
+        <th scope="col">Банк</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in creditOffersPage.content">
+        <td></td>
+        <td>{{p.creditDto.percent}}</td>
+        <td>{{p.creditDto.limitation}}</td>
+        <td>{{p.bank.title}}</td>
+        <td></td>
+        <td></td>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="showCreditOffersInfo(p.id)">Посмотреть</button>
+        </td>
+        <td>
+            <button class="btn btn-outline-primary" ng-click="deleteCreditOffers(p.id)">Удалить</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
