@@ -1,31 +1,22 @@
 package com.haulmont.testtask.controllers;
 
 import com.haulmont.testtask.dtos.BankDto;
-import com.haulmont.testtask.dtos.ClientDto;
 import com.haulmont.testtask.dtos.ClientShortDto;
 import com.haulmont.testtask.dtos.CreditDto;
 import com.haulmont.testtask.models.Bank;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import com.haulmont.testtask.repositories.BankSpecifications;
-import com.haulmont.testtask.repositories.ClientRepository;
-import com.haulmont.testtask.repositories.ClientSpecifications;
 import com.haulmont.testtask.services.BankService;
 import com.haulmont.testtask.services.ClientService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 import static java.lang.Math.toIntExact;
 
 @RestController

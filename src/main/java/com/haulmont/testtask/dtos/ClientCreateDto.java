@@ -1,7 +1,5 @@
 package com.haulmont.testtask.dtos;
 
-
-import com.haulmont.testtask.models.Client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

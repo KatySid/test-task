@@ -71,6 +71,7 @@ public class CreditOfferService {
             return creditOfferRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
 
+    @Transactional
     public void deleteById(Long id) {
         if(creditOfferRepository.findById(id).isPresent()) {
             creditOfferRepository.deleteById(id);
@@ -78,6 +79,7 @@ public class CreditOfferService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
     }
 
+    @Transactional
     public List<Payment> getCreditOfferSchedule(Long creditOfferId) {
         Optional<CreditOffer> creditOffer=creditOfferRepository.findById(creditOfferId);
         if(creditOffer.isPresent()) {

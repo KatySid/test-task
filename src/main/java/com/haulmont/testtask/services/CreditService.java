@@ -1,8 +1,5 @@
 package com.haulmont.testtask.services;
 
-import com.haulmont.testtask.dtos.ClientDto;
-import com.haulmont.testtask.dtos.CreditDto;
-import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import com.haulmont.testtask.repositories.CreditRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.math.BigDecimal;
 import java.util.Optional;
 

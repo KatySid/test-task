@@ -3,8 +3,8 @@ package com.haulmont.testtask.models;
 import com.haulmont.testtask.dtos.PaymentDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,12 +22,15 @@ public class Payment {
     private LocalDate localdate; //дата платежа
 
     @Column (name = "amount_payment")
+    @Min(0)
     private BigDecimal amountPayment; // сумма платежа
 
     @Column(name = "percent_payment")
+    @Min(0)
     private BigDecimal percentPayment; // сумма гашения процента
 
     @Column(name = "body_credit_payment")
+    @Min(0)
     private BigDecimal bodyCreditPayment; //тело гашения кредита
 
     @ManyToOne

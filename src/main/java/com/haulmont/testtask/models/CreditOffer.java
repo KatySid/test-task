@@ -2,11 +2,10 @@ package com.haulmont.testtask.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,12 +23,15 @@ public class CreditOffer {
     private Long id;
 
     @Column (name = "amount")
+    @Min(0)
     private BigDecimal amount;
 
     @Column (name = "sumPercent")
+    @Min(0)
     private BigDecimal sumPercent;
 
     @Column (name = "duration")
+    @Min(0)
     private Integer duration;
 
     @ManyToOne

@@ -1,11 +1,9 @@
 package com.haulmont.testtask.controllers;
 
-import com.haulmont.testtask.dtos.CreditDto;
 import com.haulmont.testtask.dtos.CreditOfferDto;
 import com.haulmont.testtask.dtos.PaymentDto;
 import com.haulmont.testtask.models.CreditOffer;
 import com.haulmont.testtask.models.Payment;
-import com.haulmont.testtask.repositories.CreditSpecifications;
 import com.haulmont.testtask.services.CreditOfferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

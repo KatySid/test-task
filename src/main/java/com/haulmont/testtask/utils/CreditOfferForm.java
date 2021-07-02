@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -55,27 +54,25 @@ public class CreditOfferForm {
         }
 
     private void recalculatePaymentSchedule(LocalDate dateTime){
-        amount = BigDecimal.ZERO;
-        sumPercent = BigDecimal.ZERO;
         paymentSchedule.removeAll(paymentSchedule);
         BigDecimal remainder = this.creditDto.getLimitation();
-        BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 4, RoundingMode.DOWN);
+        BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 2, RoundingMode.HALF_UP);
                 for (int i = 0; i < this.duration.intValue(); i++) {
                     PaymentDto paymentDto = new PaymentDto();
                     paymentDto.setBodyCreditPayment(bodyCreditPayment);
                     paymentDto.setDate(dateTime.plusMonths(i));
-                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate().divide(new BigDecimal(12),4,RoundingMode.DOWN));
+                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate());
                     paymentDto.setPercentPayment(bodyPercentPayment);
                     BigDecimal amountPayment = paymentDto.getAmountPayment();
                     paymentSchedule.add(paymentDto);
                     remainder = remainder.subtract(bodyCreditPayment);
-                    amount=amount.add(amountPayment);
                 };
 
         }
 
         public BigDecimal calculatePercentRate(){
-            BigDecimal percentRate = this.creditDto.getPercent().divide(new BigDecimal(100),4,RoundingMode.DOWN);
+            BigDecimal percentRate = this.creditDto.getPercent().divide(new BigDecimal(100),2,RoundingMode.HALF_UP);
+            percentRate = percentRate.divide(new BigDecimal(12),2,RoundingMode.HALF_UP);
             return percentRate;
         }
 
@@ -88,6 +85,7 @@ public class CreditOfferForm {
         }
 
     public BigDecimal getAmount() {
+        amount = creditDto.getLimitation().add(getSumPercent());
         return amount;
     }
 

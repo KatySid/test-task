@@ -26,6 +26,7 @@ public class Credit {
     private Long id;
 
     @Column(name = "limitation")
+    @Min(0)
     private BigDecimal limitation;
 
     @Column(name = "percent")

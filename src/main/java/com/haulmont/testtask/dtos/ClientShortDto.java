@@ -1,15 +1,9 @@
 package com.haulmont.testtask.dtos;
 
-
-import com.haulmont.testtask.models.Bank;
 import com.haulmont.testtask.models.Client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor

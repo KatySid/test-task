@@ -242,6 +242,7 @@ angular.module('app').controller('creditOffersFormController', function ($scope,
        $scope.showTableSchedule=true;
        $scope.getAmount();
        $scope.getSumPercent();
+
    }
 
    $scope.closePaymentsPage = function(){

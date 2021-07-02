@@ -1,7 +1,5 @@
 package com.haulmont.testtask.services;
 
-import com.haulmont.testtask.dtos.BankDto;
-import com.haulmont.testtask.dtos.ClientDto;
 import com.haulmont.testtask.models.Bank;
 import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
@@ -11,13 +9,11 @@ import com.haulmont.testtask.repositories.CreditRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 import java.util.Optional;
 

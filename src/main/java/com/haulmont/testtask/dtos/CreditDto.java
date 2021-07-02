@@ -4,7 +4,6 @@ import com.haulmont.testtask.models.Credit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 
 @Data

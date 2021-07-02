@@ -2,7 +2,6 @@ package com.haulmont.testtask.controllers;
 
 import com.haulmont.testtask.dtos.ClientCreateDto;
 import com.haulmont.testtask.dtos.ClientDto;
-import com.haulmont.testtask.dtos.ClientShortDto;
 import com.haulmont.testtask.dtos.CreditOfferDto;
 import com.haulmont.testtask.models.Bank;
 import com.haulmont.testtask.models.Client;
@@ -59,26 +58,6 @@ public class ClientController {
 
         return new ClientDto(clientService.save(client));
     }
-
-//    @PostMapping
-//    public ClientDto createNewClient(@RequestBody ClientCreateDto clientCreateDto) {
-//        Client client = new Client(clientCreateDto.getLastName(),clientCreateDto.getName(), clientCreateDto.getPatronymic(), clientCreateDto.getEmail(), clientCreateDto.getPassport());
-//        return new ClientDto(clientService.save(client));
-//    }
-
-//    @PostMapping
-//    public ClientDto createClient( @RequestParam (name = "bankId", defaultValue = "null") Long bankId,
-//                               @RequestParam String lastName,
-//                               @RequestParam String name,
-//                               @RequestParam String patronymic,
-//                               @RequestParam String passport,
-//                               @RequestParam String email) {
-//        Client client = new Client(lastName,name, patronymic, email, passport);
-//        if(bankService.findById(bankId).isPresent()){
-//            client.addToBankList(bankService.findById(bankId).get());
-//        }
-//        return new ClientDto(clientService.save(client));
-//    }
 
     @GetMapping("/credit_offers/{id}")
     public Page<CreditOfferDto> findPageOffers(@PathVariable Long id,

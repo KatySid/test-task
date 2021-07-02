@@ -2,7 +2,6 @@ package com.haulmont.testtask.controllers;
 
 import com.haulmont.testtask.dtos.CreditDto;
 import com.haulmont.testtask.models.Bank;
-import com.haulmont.testtask.models.Client;
 import com.haulmont.testtask.models.Credit;
 import com.haulmont.testtask.repositories.CreditSpecifications;
 import com.haulmont.testtask.services.BankService;
@@ -11,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
