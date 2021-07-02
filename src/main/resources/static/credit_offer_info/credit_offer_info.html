@@ -1,0 +1,83 @@
+<p></p>
+<h3>Информация о кредитном предложении</h3>
+<table class="table">
+    <p>Информация о клиенте</p>
+    <thead>
+    <tr>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Отчество</th>
+        <th scope="col">e-mail</th>
+        <th scope="col">Номер паспорта</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <td>{{creditOfferDto.clientShortDto.lastName}}</td>
+    <td>{{creditOfferDto.clientShortDto.name}}</td>
+    <td>{{creditOfferDto.clientShortDto.patronymic}}</td>
+    <td>{{creditOfferDto.clientShortDto.email}}</td>
+    <td>{{creditOfferDto.clientShortDto.passport}}</td>
+    </tbody>
+</table>
+<table class="table">
+    <p>Информация о кредите</p>
+    <thead>
+    <tr>
+        <th scope="col">Срок кредита</th>
+        <th scope="col">Лимит по кредиту</th>
+        <th scope="col">Процент по кредиту</th>
+        <th scope="col">Полная сумма кредита</th>
+        <th scope="col">Полная сумма процентов по кредиту</th>
+    </tr>
+    </thead>
+    <tbody>
+    <td>{{creditOfferDto.duration}}</td>
+    <td>{{creditOfferDto.creditDto.limitation}}</td>
+    <td>{{creditOfferDto.creditDto.percent}}</td>
+    <td>{{creditOfferDto.amount}}</td>
+    <td>{{creditOfferDto.sumPercent}}</td>
+    </tbody>
+</table>
+
+<div>
+<table class="table">
+    <p>График платежей</p>
+    <thead>
+    <tr>
+        <th scope="col">Дата платежа</th>
+        <th scope="col">Сумма погашения тела кредита</th>
+        <th scope="col">Сумма погашения процентов</th>
+        <th scope="col">Полная сумма платежа</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="payment in creditOfferPaymentsPage.content">
+        <td>{{payment.date}}</td>
+        <td>{{payment.bodyCreditPayment}}</td>
+        <td>{{payment.percentPayment}}</td>
+        <td>{{payment.amountPayment}}</td>
+    </tr>
+    </tbody>
+</table>
+    <nav aria-label="Page navigation" ng-show = "creditOfferPaymentsPage.totalPages>1">
+        <ul class="pagination">
+            <li ng-class="creditOfferPaymentsPagee.first ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="loadSchedulePage(1)">В начало</a>
+            </li>
+
+            <li ng-class="creditOfferPaymentsPage.first ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="loadSchedulePage(creditOfferPaymentsPage.number)">Пред.</a>
+            </li>
+
+            <li ng-class="creditOfferPaymentsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                ng-repeat="pageIndex in paginationArray">
+                <a class="page-link" ng-click="loadSchedulePage(pageIndex)">{{pageIndex}}</a>
+            </li>
+
+            <li ng-class="creditOfferPaymentsPage.last ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" ng-click="loadSchedulePage(creditOfferPaymentsPage.number + 2)">След.</a>
+            </li>
+        </ul>
+    </nav>
+</div>

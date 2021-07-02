@@ -32,4 +32,13 @@ public ClientShortDto(Client client) {
     this.passport = client.getPassport();
 
 }
+
+    public void clear() {
+        this.id = null;
+        this.lastName = null;
+        this.name = null;
+        this.patronymic = null;
+        this.email = null;
+        this.passport = null;
+    }
 }

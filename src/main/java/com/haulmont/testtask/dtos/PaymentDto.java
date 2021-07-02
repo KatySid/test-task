@@ -1,15 +1,29 @@
-package com.haulmont.testtask.utils;
+package com.haulmont.testtask.dtos;
 
+import com.haulmont.testtask.models.Payment;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-public class Payment {
-    private LocalDateTime date; //дата платежа
+public class PaymentDto {
+
+    private Long id;
+    private LocalDate date; //дата платежа
     private BigDecimal amountPayment; // сумма платежа
     private BigDecimal percentPayment; // сумма гашения процента
     private BigDecimal bodyCreditPayment; //тело гашения кредита
 
-    public void setDate(LocalDateTime date) {
+    public PaymentDto() {
+    }
+
+    public PaymentDto(Payment payment){
+        this.id = payment.getId();
+        this.date = payment.getLocalDate();
+        this.amountPayment = payment.getAmountPayment();
+        this.percentPayment = payment.getPercentPayment();
+        this.bodyCreditPayment = payment.getBodyCreditPayment();
+    }
+
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -27,7 +41,7 @@ public class Payment {
         return amountPayment;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

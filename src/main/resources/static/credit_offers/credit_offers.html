@@ -1,286 +1,53 @@
 <p></p>
-<h3>Данные кредитного предложения</h3>
+<h3>Список оформленных предложений</h3>
+<p></p>
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Добавить кредит</th>
-        <th scope="col">Добавить клиента</th>
-        <th scope="col">Добавить срок кредита в мес</th>
-    </tr>
-    </thead>
-    <tbody>
-    <td>
-        <button type="button" class="btn btn-outline-primary" ng-click="showCredits()">Добавить кредит</button>
-    </td>
-    <td>
-        <button type="button" class="btn btn-outline-primary" ng-click="showClients()">Добавить клиента</button>
-    </td>
-    <td>
-        <button type="button" class="btn btn-outline-primary" ng-click="showDuration()">Добавить</button>
-    </td>
-    <td>
-    </td>
-    </tbody>
-</table>
-<p></p>
-<table ng-show="duration>0" class="table">
-    <thead>
-    <tr>
-        <th scope="col">Срок кредита</th>
-        <th scope="col">{{creditOfferForm.duration}}</th>
-        <th scope="col">мес</th>
-        <td>
-            <button class="btn btn-outline-primary" ng-click="deleteDuration()">Удалить срок из предложения</button>
-        </td>
-    </tr>
-    </thead>
-</table>
-<p></p>
-<table ng-show="credit.limitation>0" class="table">
-    <thead>
-    <tr>
-        <th scope="col">Лимит по кредиту</th>
-        <th scope="col">{{credit.limitation}}</th>
-        <th scope="col"> руб</th>
-    </tr>
-    </thead>
-</table >
-    <table ng-show="credit.percent>0" class="table">
-    <thead>
-    <tr>
+        <th scope="col">Дата оформления</th>
         <th scope="col">Процент по кредиту</th>
-        <th scope="col">{{credit.percent}}</th>
-        <th scope="col">%</th>
-        <th>
-            <button class="btn btn-outline-primary" ng-click="deleteCredit(p.id)">Удалить кредит из предложения</button>
-        </th>
-    </tr>
-    </thead>
-</table>
-<table ng-show ="client.lastName.lenght>0" class="table">
-    <thead>
-    <tr>
+        <th scope="col">Лимит по кредиту</th>
         <th scope="col">Фамилия</th>
         <th scope="col">Имя</th>
         <th scope="col">Отчество</th>
-        <th scope="col">e-mail</th>
-        <th scope="col">Номер паспорта</th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>{{client.lastName}}</td>
-        <td>{{client.name}}</td>
-        <td>{{client.patronymic}}</td>
-        <td>{{client.email}}</td>
-        <td>{{client.passport}}</td>
+    <tr ng-repeat="p in creditOffersPage.content">
+        <td>{{p.createdAt}}</td>
+        <td>{{p.creditDto.percent}}</td>
+        <td>{{p.creditDto.limitation}}</td>
+        <td>{{p.clientShortDto.lastName}}</td>
+        <td>{{p.clientShortDto.name}}</td>
+        <td>{{p.clientShortDto.patronymic}}</td>
         <td>
-            <button class="btn btn-outline-primary" ng-click="deleteClient(p.id)">Удалить из предложения</button>
+            <button class="btn btn-outline-primary" ng-click="showCreditOffersInfo(p.id)">Посмотреть</button>
         </td>
-
+        <td>
+            <button class="btn btn-outline-primary" ng-click="deleteCreditOffers(p.id)">Удалить</button>
+        </td>
     </tr>
     </tbody>
 </table>
-<div ng-show = "showDurationForm">
-    <h4>Введите срок кредита в месяцах</h4>
-    <form ng-submit="addDuration()">
-        <div class="mb-3">
-            <label for="inputDuration" class="form-label">Срок кредита</label>
-            <input type="number" class="form-control" ng-model="duration" id="inputDuration" aria-describedby="durationHelp">
-        </div>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <button type="button" class="btn btn-outline-primary" ng-click="closeDuration()">Закрыть</button>
-    </form>
-</div>
-<div ng-show = "showClientsList">
-    <h3>Список клиентов</h3>
-    <form novalidate ng-submit="loadPageClients()">
-        <div class="form-group row">
-            <div class="form-group col-md-3">
-                <label for="filterLastName">Фамилия</label>
-                <input class="form-control" type="text" ng-model="filter.lastName" id="filterLastName">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="filterName">Имя</label>
-                <input class="form-control" type="text" ng-model="filter.name" id="filterName">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="filterPatronymic">Отчество</label>
-                <input class="form-control" type="text" ng-model="filter.patronymic" id="filterPatronymic">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="filter1Submit">Фильтр</label>
-                <button class="form-control btn btn-primary" id="filter1Submit" type="submit">Применить</button>
-            </div>
-        </div>
-    </form>
-    <p></p>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Отчество</th>
-            <th scope="col">e-mail</th>
-            <th scope="col">Номер паспорта</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="p in clientsPage.content">
-            <td>{{p.lastName}}</td>
-            <td>{{p.name}}</td>
-            <td>{{p.patronymic}}</td>
-            <td>{{p.email}}</td>
-            <td>{{p.passport}}</td>
-            <td>
-                <button class="btn btn-outline-primary" ng-click="addClientToOffer(p.id)">Добавить в предложение</button>
-            </td>
+<nav aria-label="Page navigation" ng-show = "creditOffersPage.totalPages>1">
+    <ul class="pagination">
+        <li ng-class="creditOffersPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCreditOffers(1)">В начало</a>
+        </li>
 
-        </tr>
-        </tbody>
-    </table>
-    <nav aria-label="Page navigation" ng-show = "clientsPage.totalPages>1">
-        <ul class="pagination">
-            <li ng-class="clientsPage.first ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" ng-click="loadPageClients(1)">В начало</a>
-            </li>
+        <li ng-class="creditOffersPage.first ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCreditOffers(creditOffersPage.number)">Пред.</a>
+        </li>
 
-            <li ng-class="clientsPage.first ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" ng-click="loadPageClients(clientsPage.number)">Пред.</a>
-            </li>
+        <li ng-class="creditOffersPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+            ng-repeat="pageIndex in paginationArray">
+            <a class="page-link" ng-click="loadPageCreditOffers(pageIndex)">{{pageIndex}}</a>
+        </li>
 
-            <li ng-class="clientsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
-                ng-repeat="pageIndex in paginationArray">
-                <a class="page-link" ng-click="loadPageClients(pageIndex)">{{pageIndex}}</a>
-            </li>
-
-            <li ng-class="clientsPage.last ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" ng-click="loadPageClients(clientsPage.number + 2)">След.</a>
-            </li>
-        </ul>
-    </nav>
-
-    <button type="button" class="btn btn-outline-primary" ng-click="closeClientsPage()">Закрыть список клиентов</button>
-    <button type="button" class="btn btn-outline-primary" ng-click="addNewClient()">Добавить нового клиента</button>
-</div>
-<div ng-show = "showClientCreateForm">
-    <h4>Введите данные нового клиента</h4>
-    <form novalidate ng-submit="createNewClient()">
-        <div class="mb-3">
-            <label for="inputLastName" class="form-label">Фамилия</label>
-            <input type="text" class="form-control" ng-model="newClientDto.lastName" id="inputLastName" aria-describedby="lastNameHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputName" class="form-label">Имя</label>
-            <input type="text" class="form-control" ng-model="newClientDto.name" id="inputName" aria-describedby="nameHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputPatronymic" class="form-label">Отчество</label>
-            <input type="text" class="form-control" ng-model="newClientDto.patronymic" id="inputPatronymic" aria-describedby="patronymicHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputEmail" class="form-label">e-mail</label>
-            <input type="text" class="form-control" ng-model="newClientDto.email" id="inputEmail" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputPassport" class="form-label">Номер паспорта</label>
-            <input type="text" class="form-control" ng-model="newClientDto.passport" id="inputPassport" aria-describedby="passportHelp">
-        </div>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <button type="button" class="btn btn-outline-primary" ng-click="closeClientForm()">Закрыть форму создания клиента</button>
-    </form>
-</div>
-<div ng-show = "showCreditsList">
-    <p></p>
-    <h4>Список кредитов</h4>
-
-    <form novalidate ng-submit="loadPageCredits()">
-        <div class="form-group row">
-            <div class="form-group col-md-3">
-                <label for="filterMinPercent">Минимальный процент</label>
-                <input class="form-control" type="number" ng-model="filter.min_percent" id="filterMinPercent">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="filterMaxPercent">Максимальный процент</label>
-                <input class="form-control" type="number" ng-model="filter.max_percent" id="filterMaxPercent">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="filterMinLimitation">Минимальный лимит по кредиту</label>
-                <input class="form-control" type="number" ng-model="filter.min_limitation" id="filterMinLimitation">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="filterMaxLimitation">Максимальный лимит по кредиту</label>
-                <input class="form-control" type="number" ng-model="filter.max_limitation" id="filterMaxLimitation">
-            </div>
-            <div class="form-group col-md-3">
-                <label for="filter2Submit">Фильтр</label>
-                <button class="form-control btn btn-primary" id="filter2Submit" type="submit">Применить</button>
-            </div>
-        </div>
-    </form>
-    <p></p>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Лимит по кредиту</th>
-            <th scope="col">Процент</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="credit in creditsPage.content">
-            <td>{{credit.limitation}}</td>
-            <td>{{credit.percent}}</td>
-            <td>
-                <button class="btn btn-outline-primary" ng-click="addCreditToOffer(credit.id)">Добавить в предложение</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <nav aria-label="Page navigation" ng-show = "creditsPage.totalPages>1">
-        <ul class="pagination">
-            <li ng-class="creditsPage.first ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" ng-click="loadPageCredits(1)">В начало</a>
-            </li>
-
-            <li ng-class="creditsPage.first ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" ng-click="loadPageCredits(creditsPage.number)">Пред.</a>
-            </li>
-
-            <li ng-class="creditsPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
-                ng-repeat="pageIndex in paginationArray">
-                <a class="page-link" ng-click="loadPageCredits(pageIndex)">{{pageIndex}}</a>
-            </li>
-
-            <li ng-class="creditsPage.last ? 'page-item disabled' : 'page-item'">
-                <a class="page-link" ng-click="loadPageCredits(creditsPage.number + 2)">След.</a>
-            </li>
-        </ul>
-    </nav>
-    <button type="button" class="btn btn-outline-primary" ng-click="closeShowCredits()">Закрыть список кредитов</button>
-    <button type="button" class="btn btn-outline-primary" ng-click="addNewCredit()">Добавить новый кредит</button>
-</div>
-<p></p>
-<div ng-show = "showCreditCreateForm">
-    <h4>Введите данные кредита</h4>
-    <form novalidate ng-submit="createNewCredit()">
-        <div class="mb-3">
-            <label for="inputLimitation" class="form-label">Лимит по кредиту</label>
-            <input type="number" class="form-control" ng-model="newCreditDto.limitation" id="inputLimitation" aria-describedby="minAmountHelp">
-        </div>
-        <div class="mb-3">
-            <label for="inputPercent" class="form-label">Процент</label>
-            <input type="number" class="form-control" ng-model="newCreditDto.percent" id="inputPercent" aria-describedby="percentHelp">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <button type="button" class="btn btn-outline-primary" ng-click="closeCreditForm()">Закрыть список кредитов</button>
-    </form>
-</div>
-
+        <li ng-class="creditOffersPage.last ? 'page-item disabled' : 'page-item'">
+            <a class="page-link" ng-click="loadPageCreditOffers(creditOffersPage.number + 2)">След.</a>
+        </li>
+    </ul>
+</nav>

@@ -28,9 +28,17 @@
                   templateUrl: 'credit/credits.html',
                   controller: 'creditsController'
             })
+            .when('/credit_offers_form', {
+                             templateUrl: 'credit_offers_form/credit_offers_form.html',
+                             controller: 'creditOffersFormController'
+            })
             .when('/credit_offers', {
-                             templateUrl: 'credit_offers/credit_offers.html',
-                             controller: 'creditOffersController'
+                                         templateUrl: 'credit_offers/credit_offers.html',
+                                         controller: 'creditOffersController'
+                        })
+            .when('/credit_offer_info/:creditOfferIdParam', {
+                             templateUrl: 'credit_offer_info/credit_offer_info.html',
+                             controller: 'creditOfferInfoController'
             })
             .when('/client_info/:clientIdParam', {
                     templateUrl: 'client_info/client_info.html',

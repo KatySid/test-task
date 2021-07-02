@@ -22,4 +22,11 @@ public CreditDto(Credit credit){
     this.limitation = credit.getLimitation();
     this.percent = credit.getPercent();
 }
+
+public void clear(){
+    this.bankId = null;
+    this.id = null;
+    this.limitation = null;
+    this.percent = null;
+}
 }
