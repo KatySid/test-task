@@ -229,7 +229,7 @@
     </tr>
     </thead>
 </table>
-<button ng-show="creditInOffer && durationForm " class="btn btn-outline-primary" ng-click="showPaymentsPage()">Рассчитать кредитное предложение</button>
+<button ng-show="creditInOffer && durationForm " class="btn btn-outline-primary" ng-click="showPaymentsPage()">Рассчитать график платежей</button>
 <p></p>
 
 <div ng-show="creditInOffer && durationForm && showTableSchedule">
@@ -271,20 +271,27 @@
         </li>
     </ul>
 </nav>
+
+</div>
+<div>
+<button ng-show="creditInOffer && durationForm && paymentsPage && sumPercentButton" class="btn btn-outline-primary" ng-click="getSumPercent()">Рассчитать полную сумму процентов по кредиту</button>
+<table ng-show="sumPercent>0" class="table">
+    <thead>
+    <tr>
+        <th scope="col">Полная сумма процентов по кредиту</th>
+        <th scope="col">{{sumPercent}}</th>
+        <th scope="col">руб</th>
+    </tr>
+    </thead>
+</table>
+</div>
+<div>
+    <button ng-show="paymentsPage && creditInOffer && durationForm && amountButton" class="btn btn-outline-primary" ng-click="getAmount()">Рассчитать полную сумму кредита</button>
     <table ng-show="amount>0 && creditInOffer && durationForm" class="table">
         <thead>
         <tr>
             <th scope="col">Полная сумма кредита</th>
             <th scope="col">{{amount}}</th>
-            <th scope="col">руб</th>
-        </tr>
-        </thead>
-    </table>
-    <table ng-show="sumPercent>0 && creditInOffer && durationForm" class="table">
-        <thead>
-        <tr>
-            <th scope="col">Полная сумма процентов по кредиту</th>
-            <th scope="col">{{sumPercent}}</th>
             <th scope="col">руб</th>
         </tr>
         </thead>

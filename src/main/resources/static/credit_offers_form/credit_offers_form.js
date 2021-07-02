@@ -203,6 +203,7 @@ angular.module('app').controller('creditOffersFormController', function ($scope,
               }).then(function (response) {
                   $scope.paymentsPage = response.data;
                   $scope.CreditOfferSchedule = true;
+                  $scope.sumPercentButton = true;
 
                   let minPageIndex = page - 2;
                   if (minPageIndex < 1) {
@@ -224,6 +225,7 @@ angular.module('app').controller('creditOffersFormController', function ($scope,
            method: 'GET',
            }).then(function (response) {
            $scope.amount = response.data;
+           $scope.amountButton = false;
            });
    }
 
@@ -233,6 +235,8 @@ angular.module('app').controller('creditOffersFormController', function ($scope,
               method: 'GET',
               }).then(function (response) {
               $scope.sumPercent = response.data;
+              $scope.amountButton = true;
+              $scope.sumPercentButton = false;
               });
       }
 
@@ -240,8 +244,8 @@ angular.module('app').controller('creditOffersFormController', function ($scope,
        $scope.loadSchedulePaymentsPage(1);
        $scope.CreditOfferSchedule = false;
        $scope.showTableSchedule=true;
-       $scope.getAmount();
-       $scope.getSumPercent();
+//       $scope.getAmount();
+//       $scope.getSumPercent();
 
    }
 
