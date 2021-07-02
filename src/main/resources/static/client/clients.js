@@ -50,20 +50,6 @@ angular.module('app').controller('clientsController', function ($scope, $http, $
             $location.path('/client_info/' + clientId);
         }
 
-
-    $scope.deleteClient = function (clientId){
-                $http({
-                    url: contextPath + '/api/v1/clients',
-                    method: 'DELETE',
-                    params: {
-                             id: clientId
-                    }
-                    }).then(function successCallback(response) {
-                    console.log("Клиент удален")
-                    $scope.loadPage(1);
-                    });
-        }
-
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
         for (let i = startPage; i < endPage + 1; i++) {

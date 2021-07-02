@@ -80,8 +80,8 @@ public class ClientController {
     }
 
     @DeleteMapping
-    public Client deleteClientById(@RequestParam Long id) {
-        return clientService.deleteById(id);
+    public void deleteClientById(@RequestParam Long id) {
+        clientService.deleteById(id);
     }
 
 }

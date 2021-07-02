@@ -18,10 +18,10 @@ create table banks (
     updated_at              timestamp default current_timestamp
 );
 
-DROP TABLE IF EXISTS clients_banks CASCADE;
+DROP TABLE IF EXISTS clients_banks;
 CREATE TABLE clients_banks (
-          client_id               bigint not null references clients (id) on DELETE CASCADE,
-          bank_id                 bigint references banks (id) on DELETE CASCADE,
+          client_id               bigint not null references clients (id),
+           bank_id                 bigint references banks (id),
           primary key (client_id, bank_id)
 );
 DROP TABLE IF EXISTS credits CASCADE;

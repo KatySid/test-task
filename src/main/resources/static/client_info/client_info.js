@@ -34,13 +34,12 @@ angular.module('app').controller('clientInfoController', function ($scope, $http
 
 
 
-            $scope.saveClient = function () {
+    $scope.saveClient = function () {
                         $http.put(contextPath + '/api/v1/clients/'+ $routeParams.clientIdParam, $scope.clientDto).then(function successCallback(response){
                         console.log("Клиент изменен")
-                                                $scope.client = response.data;
-                                                $scope.showClientEditForm = false;
-                                                $scope.loadClient();
-
+                        $scope.client = response.data;
+                        $scope.showClientEditForm = false;
+                        $scope.loadClient();
                         });
                 }
 

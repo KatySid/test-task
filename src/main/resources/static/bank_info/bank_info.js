@@ -154,7 +154,9 @@ angular.module('app').controller('bankInfoController', function ($scope, $http, 
                     console.log("Кредит сохранен"),
                     $scope.showCreditCreateForm = false;
                      $scope.loadBank(1);
+                     $scope.loadPageCredits(1);
             });
+
          }
 
     $scope.closeCreditForm= function () {

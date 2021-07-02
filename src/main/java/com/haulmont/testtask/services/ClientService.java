@@ -62,11 +62,10 @@ public class ClientService  {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
-    public Client deleteById(Long id) {
+    public void deleteById(Long id) {
             if(clientRepository.findById(id).isPresent()) {
                 Client client = clientRepository.findById(id).get();
                 clientRepository.delete(client);
-                return client;
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
         }

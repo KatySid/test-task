@@ -24,13 +24,12 @@ angular.module('app').controller('creditInfoController', function ($scope, $http
     $scope.creditDto.id = $routeParams.creditIdParam,
            $http.put(contextPath + '/api/v1/credits', $scope.creditDto)
            .then(function successCallback(response){
-                                                console.log("Кредит изменен")
-                                                $scope.credit = response.data;
-                                                $scope.showCreditEditForm = false;
-                                                $scope.loadCredit();
-
-                        });
-                }
+           console.log("Кредит изменен")
+           $scope.credit = response.data;
+           $scope.showCreditEditForm = false;
+           $scope.loadCredit();
+           });
+    }
 
     $scope.loadCredit();
 
