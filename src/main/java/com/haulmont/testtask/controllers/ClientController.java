@@ -47,7 +47,8 @@ public class ClientController {
 
     @PostMapping
     public ClientDto createNewClientOfBank(@RequestBody ClientCreateDto clientDto) {
-        Client client = new Client(clientDto.getLastName(), clientDto.getName(), clientDto.getPatronymic(), clientDto.getEmail(), clientDto.getPassport());
+        Client client = new Client(clientDto.getLastName(), clientDto.getName(), clientDto.getPatronymic(),
+                                    clientDto.getEmail(), clientDto.getPhone(), clientDto.getPassport());
         if (clientDto.getBankId() != null) {
             Optional<Bank> optionalBank = bankService.findById(clientDto.getBankId());
 

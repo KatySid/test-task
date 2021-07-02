@@ -19,6 +19,7 @@ public class ClientDto {
     private String name;
     private String patronymic;
     private String email;
+    private String phone;
     private String passport;
     public List<String> titlesBanksList;
 
@@ -28,6 +29,7 @@ public ClientDto (Client client) {
     this.name = client.getName();
     this.patronymic = client.getPatronymic();
     this.email = client.getEmail();
+    this.phone = client.getPhone();
     this.passport = client.getPassport();
     this.titlesBanksList = client.getBanksList().stream().map(new Function<Bank, String>() {
         @Override

@@ -31,6 +31,9 @@ public class Client {
     @Column (name ="patronymic")
     private String patronymic;
 
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "email")
     private String email;
 
@@ -60,11 +63,12 @@ public class Client {
 
     }
 
-    public Client(String lastName, String name, String patronymic, String email, String passport) {
+    public Client(String lastName, String name, String patronymic, String email,String phone, String passport) {
         this.lastName = lastName;
         this.name = name;
         this.patronymic = patronymic;
         this.email = email;
+        this.phone = phone;
         this.passport = passport;
         this.banksList=new ArrayList<>();
     }

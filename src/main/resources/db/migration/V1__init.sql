@@ -6,6 +6,7 @@ create table clients (
     last_name               varchar(30) not null,
     patronymic              varchar(30),
     email                   varchar(80) unique,
+    phone                   varchar(80) unique,
     passport                varchar(30) not null unique,
     created_at              timestamp default current_timestamp,
     updated_at              timestamp default current_timestamp
@@ -61,19 +62,19 @@ INSERT INTO banks (title) VALUES
 ('СБЕР'),
 ('ВТБ');
 
-INSERT INTO clients (last_name, name, patronymic, email, passport) VALUES
-('Ivanov1', 'Ivan','Ivanovich', '1ivanov@mail.ru', '6413 789951'),
-('Petrov2', 'Ivan','Ivanovich', '2petrov@mail.ru', '6413 789152'),
-('Ivanov3', 'Ivan','Ivanovich', '3ivanov@mail.ru', '6413 789953'),
-('Petrov4', 'Ivan','Ivanovich', '4petrov@mail.ru', '6413 789154'),
-('Ivanov5', 'Ivan','Ivanovich', '5ivanov@mail.ru', '6413 789955'),
-('Petrov6', 'Ivan','Ivanovich', '6petrov@mail.ru', '6413 789156'),
-('Ivanov7', 'Ivan','Ivanovich', '7ivanov@mail.ru', '6413 789957'),
-('Petrov8', 'Ivan','Ivanovich', '8petrov@mail.ru', '6413 789158'),
-('Ivanov9', 'Ivan','Ivanovich', '9ivanov@mail.ru', '6413 789959'),
-('Petrov10', 'Ivan','Ivanovich', '10petrov@mail.ru', '6413 789150'),
-('Ivanov11', 'Ivan','Ivanovich', '11ivanov@mail.ru', '6413 789960'),
-('Petrov12', 'Ivan','Ivanovich', '12petrov@mail.ru', '6413 789161');
+INSERT INTO clients (last_name, name, patronymic, email, phone, passport) VALUES
+('Ivanov1', 'Ivan','Ivanovich', '1ivanov@mail.ru', '6413 789951', '6413 789951'),
+('Petrov2', 'Ivan','Ivanovich', '2petrov@mail.ru', '6413 789152', '6413 789152' ),
+('Ivanov3', 'Ivan','Ivanovich', '3ivanov@mail.ru', '6413 789953', '6413 789953'),
+('Petrov4', 'Ivan','Ivanovich', '4petrov@mail.ru', '6413 789154', '6413 789154'),
+('Ivanov5', 'Ivan','Ivanovich', '5ivanov@mail.ru', '6413 789955', '6413 789955'),
+('Petrov6', 'Ivan','Ivanovich', '6petrov@mail.ru', '6413 789156', '6413 789156'),
+('Ivanov7', 'Ivan','Ivanovich', '7ivanov@mail.ru', '6413 789957','6413 789957'),
+('Petrov8', 'Ivan','Ivanovich', '8petrov@mail.ru', '6413 789158', '6413 789158'),
+('Ivanov9', 'Ivan','Ivanovich', '9ivanov@mail.ru', '6413 789959', '6413 789959'),
+('Petrov10', 'Ivan','Ivanovich', '10petrov@mail.ru', '6413 789150', '6413 789150'),
+('Ivanov11', 'Ivan','Ivanovich', '11ivanov@mail.ru', '6413 789960', '6413 789960'),
+('Petrov12', 'Ivan','Ivanovich', '12petrov@mail.ru', '6413 789161', '6413 789161');
 
 insert into clients_banks (client_id, bank_id)
 values

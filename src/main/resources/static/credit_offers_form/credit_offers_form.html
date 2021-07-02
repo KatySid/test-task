@@ -40,6 +40,7 @@
         <th scope="col">Имя</th>
         <th scope="col">Отчество</th>
         <th scope="col">e-mail</th>
+        <th scope="col">Телефон</th>
         <th scope="col">Номер паспорта</th>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -51,6 +52,7 @@
         <td>{{clientInOffer.name}}</td>
         <td>{{clientInOffer.patronymic}}</td>
         <td>{{clientInOffer.email}}</td>
+        <td>{{clientInOffer.phone}}</td>
         <td>{{clientInOffer.passport}}</td>
         <td>
             <button class="btn btn-outline-primary" ng-click="deleteClient(p.id)">Удалить клиента из предложения</button>
@@ -99,6 +101,7 @@
             <th scope="col">Имя</th>
             <th scope="col">Отчество</th>
             <th scope="col">e-mail</th>
+            <th scope="col">Телефон</th>
             <th scope="col">Номер паспорта</th>
             <th scope="col"></th>
             <th scope="col"></th>
@@ -110,6 +113,7 @@
             <td>{{p.name}}</td>
             <td>{{p.patronymic}}</td>
             <td>{{p.email}}</td>
+            <td>{{p.phone}}</td>
             <td>{{p.passport}}</td>
             <td>
                 <button class="btn btn-outline-primary" ng-click="addClientToOffer(p.id)">Добавить в предложение</button>
@@ -139,7 +143,7 @@
         </ul>
     </nav>
 
-    <button type="button" class="btn btn-outline-primary" ng-click="closeClientsPage()">Закрыть список клиентов</button>
+    <button type="button" class="btn btn-outline-primary" ng-click="closeClients()">Закрыть список клиентов</button>
     </div>
 <div ng-show = "showCreditsList">
     <p></p>

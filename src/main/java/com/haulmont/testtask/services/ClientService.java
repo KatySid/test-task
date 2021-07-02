@@ -55,6 +55,7 @@ public class ClientService  {
             client.setName(clientDto.getName());
             client.setPatronymic(clientDto.getPatronymic());
             client.setEmail(clientDto.getEmail());
+            client.setEmail(clientDto.getPhone());
             client.setPassport(clientDto.getPassport());
             client.getBankList();
             return clientRepository.save(client);

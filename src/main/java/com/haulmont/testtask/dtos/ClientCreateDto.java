@@ -13,6 +13,7 @@ public class ClientCreateDto {
     private String name;
     private String patronymic;
     private String email;
+    private String phone;
     private String passport;
 
 

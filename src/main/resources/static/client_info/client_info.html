@@ -7,6 +7,7 @@
         <th scope="col">Имя</th>
         <th scope="col">Отчество</th>
         <th scope="col">e-mail</th>
+        <th scope="col">Телефон</th>
         <th scope="col">Номер паспорта</th>
         <th scope="col"></th>
     </tr>
@@ -16,6 +17,7 @@
     <td>{{client.name}}</td>
     <td>{{client.patronymic}}</td>
     <td>{{client.email}}</td>
+    <td>{{client.phone}}</td>
     <td>{{client.passport}}</td>
     <td>
         <button type="button" class="btn btn-outline-primary" ng-click="updateClient()">Редактировать</button>
@@ -40,6 +42,10 @@
         <div class="mb-3">
             <label for="inputEmail" class="form-label">e-mail</label>
             <input type="text" class="form-control" ng-model="clientDto.email" id="inputEmail" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="inputPhone" class="form-label">Телефон</label>
+            <input type="text" class="form-control" ng-model="clientDto.phone" id="inputPhone" aria-describedby="phoneHelp">
         </div>
         <div class="mb-3">
             <label for="inputPassport" class="form-label">Номер паспорта</label>

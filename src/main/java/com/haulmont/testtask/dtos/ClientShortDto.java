@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +15,7 @@ public class ClientShortDto {
     private String lastName;
     private String name;
     private String patronymic;
+    private String phone;
     private String email;
     private String passport;
 
@@ -23,6 +26,7 @@ public ClientShortDto(Client client) {
     this.name = client.getName();
     this.patronymic = client.getPatronymic();
     this.email = client.getEmail();
+    this.phone = client.getPhone();
     this.passport = client.getPassport();
 
 }
@@ -33,6 +37,7 @@ public ClientShortDto(Client client) {
         this.name = null;
         this.patronymic = null;
         this.email = null;
+        this.phone = null;
         this.passport = null;
     }
 }
