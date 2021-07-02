@@ -14,7 +14,6 @@ import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +23,7 @@ public class CreditOfferForm {
         private ClientShortDto clientShortDto;
         private CreditDto creditDto;
         private BigDecimal amount;
+        private BigDecimal sumPercent;
         private Integer duration;
         private List<PaymentDto> paymentSchedule;
 
@@ -32,6 +32,7 @@ public class CreditOfferForm {
     public void init(){
         paymentSchedule = new ArrayList<>();
         this.amount = BigDecimal.ZERO;
+        this.sumPercent = BigDecimal.ZERO;
         this.creditDto = new CreditDto();
         this.clientShortDto = new ClientShortDto();
         this.duration = 1;
@@ -55,6 +56,7 @@ public class CreditOfferForm {
 
     private void recalculatePaymentSchedule(LocalDate dateTime){
         amount = BigDecimal.ZERO;
+        sumPercent = BigDecimal.ZERO;
         paymentSchedule.removeAll(paymentSchedule);
         BigDecimal remainder = this.creditDto.getLimitation();
         BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 4, RoundingMode.DOWN);
@@ -77,12 +79,12 @@ public class CreditOfferForm {
             return percentRate;
         }
 
-        public BigDecimal getSumPercentOfCredit(){
-        BigDecimal sumPercentOfCredit = BigDecimal.ZERO;
+        public BigDecimal getSumPercent(){
+            sumPercent = BigDecimal.ZERO;
             for (int i = 0; i < paymentSchedule.size(); i++) {
-                sumPercentOfCredit=sumPercentOfCredit.add(paymentSchedule.get(i).getPercentPayment());
+                sumPercent=sumPercent.add(paymentSchedule.get(i).getPercentPayment());
             }
-            return sumPercentOfCredit;
+            return sumPercent;
         }
 
     public BigDecimal getAmount() {

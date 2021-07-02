@@ -11,9 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,6 +50,7 @@ public class CreditOfferService {
         creditOffer.setCredit(credit);
         creditOffer.setAmount(creditOfferForm.getAmount());
         creditOffer.setDuration(creditOfferForm.getDuration());
+        creditOffer.setSumPercent(creditOfferForm.getSumPercent());
         creditOffer = creditOfferRepository.save(creditOffer);
         for (PaymentDto paymentDto : creditOfferForm.getPaymentSchedule()) {
             Payment payment = new Payment(paymentDto);
@@ -65,5 +69,20 @@ public class CreditOfferService {
 
     public Page<CreditOffer> findPage(int page, int pageSize){
             return creditOfferRepository.findAll(PageRequest.of(page - 1, pageSize));
+    }
+
+    public void deleteById(Long id) {
+        if(creditOfferRepository.findById(id).isPresent()) {
+            creditOfferRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
+    }
+
+    public List<Payment> getCreditOfferSchedule(Long creditOfferId) {
+        Optional<CreditOffer> creditOffer=creditOfferRepository.findById(creditOfferId);
+        if(creditOffer.isPresent()) {
+           return creditOffer.get().getPaymentSchedule();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
     }
 }

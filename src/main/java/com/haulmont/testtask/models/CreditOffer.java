@@ -26,6 +26,9 @@ public class CreditOffer {
     @Column (name = "amount")
     private BigDecimal amount;
 
+    @Column (name = "sumPercent")
+    private BigDecimal sumPercent;
+
     @Column (name = "duration")
     private Integer duration;
 

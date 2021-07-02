@@ -18,13 +18,13 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
                 }
 
                 let maxPageIndex = page + 2;
-                if (maxPageIndex > $scope.clientsPage.totalPages) {
-                    maxPageIndex = $scope.clientsPage.totalPages;
+                if (maxPageIndex > $scope.creditOffersPage.totalPages) {
+                    maxPageIndex = $scope.creditOffersPage.totalPages;
                 }
 
                 $scope.paginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
             });
-    }
+    };
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
                 let arr = [];
@@ -33,6 +33,23 @@ angular.module('app').controller('creditOffersController', function ($scope, $ht
                 }
                 return arr;
     };
+
+    $scope.deleteCreditOffers = function(creditOfferId){
+    $http({
+           url: contextPath + '/api/v1/credit_offers',
+            method: 'DELETE',
+            params: {
+                     id: creditOfferId
+                    }
+            }).then(function successCallback(response) {
+                console.log("Кредит удален")
+                $scope.loadPageCreditOffers(1);
+            });
+    }
+
+    $scope.showCreditOffersInfo = function(creditOfferId){
+     $location.path('/credit_offer_info/' + creditOfferId);
+    }
 
     $scope.loadPageCreditOffers(1);
 

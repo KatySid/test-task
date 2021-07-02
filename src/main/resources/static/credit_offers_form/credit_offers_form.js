@@ -263,8 +263,9 @@ angular.module('app').controller('creditOffersFormController', function ($scope,
                console.log("Предложение сохранено")
                $scope.clearForm();
                });
+               window.location.reload();
    }
 
-    });
+  });
 
 

@@ -80,7 +80,7 @@ public class CreditOfferFormController {
 
     @GetMapping("/percentPayment")
     public BigDecimal getPercentPayment() {
-        return creditOfferFormService.getCreditOfferForm().getSumPercentOfCredit();
+        return creditOfferFormService.getCreditOfferForm().getSumPercent();
     }
 
     @GetMapping("/addDuration/{duration}")

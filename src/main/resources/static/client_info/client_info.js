@@ -1,4 +1,4 @@
-angular.module('app').controller('clientInfoController', function ($scope, $http, $localStorage, $routeParams) {
+angular.module('app').controller('clientInfoController', function ($scope, $http, $localStorage, $routeParams, $location) {
     const contextPath = 'http://localhost:8189/app';
 
 
@@ -32,25 +32,7 @@ angular.module('app').controller('clientInfoController', function ($scope, $http
 
         }
 
-//     $scope.saveClient = function (){
-//                    $http({
-//                        url: contextPath + '/api/v1/clients',
-//                        method: 'PUT',
-//                        params: {
-//                                 id: $routeParams.clientIdParam,
-//                                 lastName: $scope.lastName,
-//                                 name: $scope.name,
-//                                 patronymic: $scope.patronymic,
-//                                 passport: $scope.passport,
-//                                 email: $scope.email
-//                        }
-//                        }).then(function successCallback(response) {
-//                        console.log("Клиент изменен")
-//                        $scope.client = response.data;
-//                        $scope.showClientEditForm = false;
-//                        $scope.loadClient();
-//                        });
-//            }
+
 
             $scope.saveClient = function () {
                         $http.put(contextPath + '/api/v1/clients/'+ $routeParams.clientIdParam, $scope.clientDto).then(function successCallback(response){
@@ -61,6 +43,24 @@ angular.module('app').controller('clientInfoController', function ($scope, $http
 
                         });
                 }
+
+    $scope.deleteCreditOffers = function(creditOfferId){
+     $http({
+               url: contextPath + '/api/v1/credit_offers',
+                method: 'DELETE',
+                params: {
+                         id: creditOfferId
+                        }
+                }).then(function successCallback(response) {
+                    console.log("Кредит удален")
+                });
+                window.location.reload();
+
+    }
+
+    $scope.showCreditOffersInfo = function(creditOfferId){
+         $location.path('/credit_offer_info/' + creditOfferId);
+        }
 
     $scope.loadClient();
     $scope.loadCreditOffers();

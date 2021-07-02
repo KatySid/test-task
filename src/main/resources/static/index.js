@@ -36,6 +36,10 @@
                                          templateUrl: 'credit_offers/credit_offers.html',
                                          controller: 'creditOffersController'
                         })
+            .when('/credit_offer_info/:creditOfferIdParam', {
+                             templateUrl: 'credit_offer_info/credit_offer_info.html',
+                             controller: 'creditOfferInfoController'
+            })
             .when('/client_info/:clientIdParam', {
                     templateUrl: 'client_info/client_info.html',
                     controller: 'clientInfoController'

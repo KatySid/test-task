@@ -50,31 +50,24 @@
     </form>
 </div>
 <div>
-<table ng-show ="creditOffersPage" class="table">
+<table ng-show ="clientsCreditOffers" class="table">
     <p>Список предложений</p>
     <thead>
     <tr>
+        <th scope="col">ID</th>
         <th scope="col">Дата оформления</th>
         <th scope="col">Процент по кредиту</th>
         <th scope="col">Лимит по кредиту</th>
-        <th scope="col">Банк</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="p in creditOffersPage.content">
-        <td></td>
+    <tr ng-repeat="p in clientsCreditOffers.content">
+        <td>{{p.id}}</td>
+        <td>{{p.createdAt}}</td>
         <td>{{p.creditDto.percent}}</td>
         <td>{{p.creditDto.limitation}}</td>
-        <td>{{p.bank.title}}</td>
-        <td></td>
-        <td></td>
         <td>
             <button class="btn btn-outline-primary" ng-click="showCreditOffersInfo(p.id)">Посмотреть</button>
-        </td>
-        <td>
-            <button class="btn btn-outline-primary" ng-click="deleteCreditOffers(p.id)">Удалить</button>
         </td>
     </tr>
     </tbody>

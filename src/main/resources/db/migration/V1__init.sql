@@ -37,6 +37,7 @@ DROP TABLE IF EXISTS credit_offers CASCADE;
 CREATE TABLE credit_offers (
     id                      bigserial primary key,
     amount                  numeric(16,2),
+    sum_percent             numeric(16,2),
     duration                numeric(8,2),
     client_id               bigint not null references clients (id) on DELETE CASCADE,
     credit_id               bigint not null references credits (id) on DELETE CASCADE,
@@ -51,7 +52,7 @@ CREATE TABLE payments (
     amount_payment          numeric(16,2),
     percent_payment         numeric(16,2),
     body_credit_payment     numeric(16,2),
-    credit_offer_id          bigint not null references credit_offers (id),
+    credit_offer_id         bigint not null references credit_offers (id) on DELETE CASCADE,
     created_at              timestamp default current_timestamp,
     updated_at              timestamp default current_timestamp
 );
