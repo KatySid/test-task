@@ -141,7 +141,7 @@ angular.module('app').controller('bankInfoController', function ($scope, $http, 
     $scope.createNewClientOfBank = function(){
         $scope.newClientDto.bankId =  $routeParams.bankIdParam;
          $http.post(contextPath + '/api/v1/clients', $scope.newClientDto).then(function successCallback(response){
-                    console.log("Клиент сохранен"),
+                    console.log("Клиент сохранен");
                     $scope.showClientCreateForm = false;
                     $scope.loadPageClients(1);
 
@@ -174,12 +174,11 @@ angular.module('app').controller('bankInfoController', function ($scope, $http, 
         $scope.bankDto.id = $routeParams.bankIdParam,
               $http.put(contextPath + '/api/v1/banks', $scope.bankDto)
               .then(function successCallback(response){
-                                                   console.log("Данные банка изменены")
-                                                   $scope.bank = response.data;
-                                                   $scope.showBankUpdateForm = false;
-                                                   $scope.loadBank(1);
-
-                           });
+                     console.log("Данные банка изменены");
+                     $scope.bank = response.data;
+                     $scope.showBankUpdateForm = false;
+                     $scope.loadBank(1);
+              });
     }
 
     $scope.deleteClient = function(clientId){

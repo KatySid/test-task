@@ -33,6 +33,7 @@ angular.module('app').controller('clientsController', function ($scope, $http, $
               .then(function successCallback(response){
                 console.log("Клиент сохранен"),
                                 $scope.showClientCreateForm = false;
+                                alert('Клиент добавлен');
                                 $scope.loadPage(1);
      });
      }
@@ -49,6 +50,20 @@ angular.module('app').controller('clientsController', function ($scope, $http, $
     $scope.showClientInfo = function (clientId) {
             $location.path('/client_info/' + clientId);
         }
+
+    $scope.deleteClient = function (clientId){
+                    $http({
+                        url: contextPath + '/api/v1/clients',
+                        method: 'DELETE',
+                        params: {
+                                 id: clientId
+                        }
+                        }).then(function successCallback(response) {
+                        console.log("Клиент удален");
+                        alert('Клиент удален');
+                        $scope.loadPage(1);
+                        });
+            }
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];

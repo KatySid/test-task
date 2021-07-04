@@ -66,6 +66,9 @@ public class ClientService  {
     public void deleteById(Long id) {
             if(clientRepository.findById(id).isPresent()) {
                 Client client = clientRepository.findById(id).get();
+                List<Bank> banks = client.getBankList();
+                banks.removeAll(banks);
+                clientRepository.save(client);
                 clientRepository.delete(client);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
