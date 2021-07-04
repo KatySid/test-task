@@ -1,7 +1,6 @@
-BEGIN;
 DROP TABLE IF EXISTS clients CASCADE;
 create table clients (
-    id                      bigserial primary key,
+    id                      bigint IDENTITY primary key,
     name                    varchar(30) not null,
     last_name               varchar(30) not null,
     patronymic              varchar(30),
@@ -13,8 +12,8 @@ create table clients (
 );
 DROP TABLE IF EXISTS banks CASCADE;
 create table banks (
-    id                      bigserial primary key,
-    title                    varchar(50) not null unique,
+    id                      bigint IDENTITY primary key,
+    title                   varchar(50) not null unique,
     created_at              timestamp default current_timestamp,
     updated_at              timestamp default current_timestamp
 );
@@ -27,7 +26,7 @@ CREATE TABLE clients_banks (
 );
 DROP TABLE IF EXISTS credits CASCADE;
 create table credits (
-    id                      bigserial primary key,
+    id                      bigint IDENTITY primary key,
     limitation              numeric(16,2),
     percent                 numeric(8,2),
     bank_id                 bigint REFERENCES banks (id) on DELETE CASCADE,
@@ -36,7 +35,7 @@ create table credits (
 );
 DROP TABLE IF EXISTS credit_offers CASCADE;
 CREATE TABLE credit_offers (
-    id                      bigserial primary key,
+    id                      bigint IDENTITY primary key,
     amount                  numeric(16,2),
     sum_percent             numeric(16,2),
     duration                numeric(8,2),
@@ -48,7 +47,7 @@ CREATE TABLE credit_offers (
 
 DROP TABLE IF EXISTS payments CASCADE;
 CREATE TABLE payments (
-    id                      bigserial primary key,
+    id                      bigint IDENTITY primary key,
     localdate               timestamp,
     amount_payment          numeric(16,2),
     percent_payment         numeric(16,2),
@@ -78,22 +77,20 @@ INSERT INTO clients (last_name, name, patronymic, email, phone, passport) VALUES
 
 insert into clients_banks (client_id, bank_id)
 values
+(0, 0),
+(0, 1),
 (1, 1),
-(1, 2),
-(2, 2),
-(3, 2),
-(4, 1),
+(2, 1),
+(3, 0),
+(4, 0),
 (5, 1),
-(6, 2),
+(6, 0),
 (7, 1),
-(8, 2),
-(9, 1),
+(8, 0),
+(9, 0),
 (10, 1),
-(11, 2),
-(12, 1);
+(11, 0);
 
 INSERT INTO credits (limitation, percent, bank_id) VALUES
-(10000, 20,1),
-(100000, 15,1);
-
-COMMIT;
+(10000, 20,0),
+(100000, 15,0);
