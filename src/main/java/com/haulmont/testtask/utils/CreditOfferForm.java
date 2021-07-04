@@ -57,13 +57,12 @@ public class CreditOfferForm {
     private void recalculatePaymentSchedule(LocalDate dateTime){
         paymentSchedule.removeAll(paymentSchedule);
         BigDecimal remainder = this.creditDto.getLimitation();
-        MathContext mc = new MathContext(4,RoundingMode.HALF_UP);
         BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 2, RoundingMode.HALF_UP);
                 for (int i = 0; i < this.duration.intValue(); i++) {
                     PaymentDto paymentDto = new PaymentDto();
                     paymentDto.setBodyCreditPayment(bodyCreditPayment);
                     paymentDto.setDate(dateTime.plusMonths(i));
-                    BigDecimal bodyPercentPayment = (remainder.multiply(calculatePercentRate())).round(mc);
+                    BigDecimal bodyPercentPayment = (remainder.multiply(calculatePercentRate())).setScale(2,RoundingMode.HALF_UP);
                     paymentDto.setPercentPayment(bodyPercentPayment);
                     BigDecimal amountPayment = paymentDto.getAmountPayment();
                     paymentSchedule.add(paymentDto);
@@ -86,8 +85,12 @@ public class CreditOfferForm {
             return sumPercent;
         }
 
+
     public BigDecimal getAmount() {
-        amount = creditDto.getLimitation().add(getSumPercent());
+        amount=BigDecimal.ZERO;
+        for (int i = 0; i < paymentSchedule.size(); i++) {
+            amount = amount.add(paymentSchedule.get(i).getAmountPayment());
+        }
         return amount;
     }
 
