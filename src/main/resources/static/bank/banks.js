@@ -26,8 +26,8 @@ angular.module('app').controller('banksController', function ($scope, $http, $lo
     };
 
     $scope.createNewBank = function(){
-     $http.post(contextPath + '/api/v1/banks', $scope.newBankDto).then(function successCallback(response){
-                console.log("Банк сохранен"),
+     $http.post(contextPath + '/api/v1/banks', $scope.bankDto).then(function successCallback(response){
+                console.log("Банк сохранен");
                 $scope.showBankCreateForm = false;
                 $scope.loadPageBanks(1)
      });
@@ -54,7 +54,7 @@ angular.module('app').controller('banksController', function ($scope, $http, $lo
                              id: bankId
                     }
                     }).then(function successCallback(response) {
-                    console.log("Банк удален")
+                    console.log("Банк удален");
                     $scope.loadPageBanks(1);
                     });
     }

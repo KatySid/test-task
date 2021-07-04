@@ -71,8 +71,8 @@ public class CreditOfferForm {
         }
 
         public BigDecimal calculatePercentRate(){
-            BigDecimal percentRate = this.creditDto.getPercent().divide(new BigDecimal(100),2,RoundingMode.HALF_UP);
-            percentRate = percentRate.divide(new BigDecimal(12),2,RoundingMode.HALF_UP);
+            BigDecimal percentRate = this.creditDto.getPercent().divide(new BigDecimal(100),4,RoundingMode.HALF_UP);
+            percentRate = percentRate.divide(new BigDecimal(12),4,RoundingMode.HALF_UP);
             return percentRate;
         }
 
