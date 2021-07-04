@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,12 +57,13 @@ public class CreditOfferForm {
     private void recalculatePaymentSchedule(LocalDate dateTime){
         paymentSchedule.removeAll(paymentSchedule);
         BigDecimal remainder = this.creditDto.getLimitation();
+        MathContext mc = new MathContext(4,RoundingMode.HALF_UP);
         BigDecimal bodyCreditPayment = remainder.divide(new BigDecimal(this.duration), 2, RoundingMode.HALF_UP);
                 for (int i = 0; i < this.duration.intValue(); i++) {
                     PaymentDto paymentDto = new PaymentDto();
                     paymentDto.setBodyCreditPayment(bodyCreditPayment);
                     paymentDto.setDate(dateTime.plusMonths(i));
-                    BigDecimal bodyPercentPayment = remainder.multiply(calculatePercentRate());
+                    BigDecimal bodyPercentPayment = (remainder.multiply(calculatePercentRate())).round(mc);
                     paymentDto.setPercentPayment(bodyPercentPayment);
                     BigDecimal amountPayment = paymentDto.getAmountPayment();
                     paymentSchedule.add(paymentDto);

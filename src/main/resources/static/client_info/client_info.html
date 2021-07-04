@@ -60,7 +60,6 @@
     <p>Список предложений</p>
     <thead>
     <tr>
-        <th scope="col">ID</th>
         <th scope="col">Дата оформления</th>
         <th scope="col">Процент по кредиту</th>
         <th scope="col">Лимит по кредиту</th>
@@ -68,7 +67,6 @@
     </thead>
     <tbody>
     <tr ng-repeat="p in clientsCreditOffers.content">
-        <td>{{p.id}}</td>
         <td>{{p.createdAt}}</td>
         <td>{{p.creditDto.percent}}</td>
         <td>{{p.creditDto.limitation}}</td>
